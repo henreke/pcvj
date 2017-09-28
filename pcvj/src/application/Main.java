@@ -23,5 +23,6 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 		int temp= 1;
+		temp++;
 	}
 }

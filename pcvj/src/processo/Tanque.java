@@ -7,12 +7,11 @@ public class Tanque {
 
 	private int numero;
 	private float level;
-	private float tempoAquecimento, tempoDecorridoAquecimento;
+	private int tempoAquecimento, tempoDecorridoAquecimento;
 	private Timer timer;
 	public void aquecer(int tempo, float temperatura){
 		timer = new Timer();
-        timer.schedule(new relogio(this), tempo*1000);
-
+        timer.schedule(new relogio(), 1000);
 
 	}
 
@@ -26,21 +25,23 @@ public class Tanque {
 		return 0;
 	}
 
+	public int getTempoDecorridoAquecimento(){
+		return tempoDecorridoAquecimento;
+	}
 
 
 	class relogio extends TimerTask{
 
-		Tanque tq;
 
-		public relogio(Tanque tq){
-			this.tq = tq;
-		}
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-
-			tq.pararAquecer();
-
+			tempoDecorridoAquecimento++;
+			if (tempoDecorridoAquecimento > tempoAquecimento)
+			{
+				pararAquecer();
+				timer.cancel();
+			}
 		}
 
 

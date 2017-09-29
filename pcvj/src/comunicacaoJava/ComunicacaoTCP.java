@@ -63,12 +63,12 @@ public class ComunicacaoTCP {
     }
 
     public void abrirValvula(int nValvula) throws IOException {
-            String msg = TipoMSG.VALVULA + String.valueOf(nValvula) + String.valueOf(Comandos.ABRIR);
+            String msg = TipoMSG.VALVULA+"#" + String.valueOf(nValvula)+"#" + String.valueOf(Comandos.ABRIR);
             sendMessage(msg);
     }
 
     public void fecharValvula(int nValvula) throws IOException {
-        String msg = TipoMSG.VALVULA + String.valueOf(nValvula) + String.valueOf(Comandos.FECHAR);
+        String msg = TipoMSG.VALVULA+"#" + String.valueOf(nValvula)+"#" + String.valueOf(Comandos.FECHAR);
         sendMessage(msg);
     }
 

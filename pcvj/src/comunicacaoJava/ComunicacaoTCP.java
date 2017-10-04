@@ -1,8 +1,10 @@
 package comunicacaoJava;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by henreke on 7/24/2017.
@@ -33,6 +35,7 @@ public class ComunicacaoTCP {
         try {
             if (conexao == null){
                 conexao = new Socket(this.ip,this.porta);
+               // conexao.connect(conexao.getRemoteSocketAddress(), 3000);
             }
             return conexao.getOutputStream();
         } catch (IOException e) {
@@ -62,6 +65,24 @@ public class ComunicacaoTCP {
         }
     }
 
+    public String sendMessageUpdate(String msg) throws IOException {
+        canal = conectar();
+        String resposta ="";
+        if (canal != null) {
+        	DataInputStream aws = new DataInputStream(conexao.getInputStream());
+            String msg2 ='$'+msg+'$';
+            canal.write(msg2.getBytes());
+            byte[] respostaB = new byte[50];
+            
+            aws.read(respostaB);
+            resposta = new String(respostaB,StandardCharsets.UTF_8);
+            aws.close();
+            desconectar();
+        }
+        
+        return resposta;
+    }
+    
     public void abrirValvula(int nValvula) throws IOException {
             String msg = TipoMSG.VALVULA+"#" + String.valueOf(nValvula)+"#" + String.valueOf(Comandos.ABRIR);
             sendMessage(msg);
@@ -77,6 +98,12 @@ public class ComunicacaoTCP {
                 +String.valueOf(pid.nPID)+'#'+String.valueOf(pid.P)
                 +'#'+String.valueOf(pid.I)+'#'+String.valueOf(pid.D)+'#';
         sendMessage(msg);
+    }
+    
+    public String getUpdate(int tipo, String msg) throws IOException
+    {
+    	String msgenvio = TipoMSG.UPDATE+'#'+msg;
+    	return sendMessageUpdate(msgenvio);
     }
 }
 class TipoMSG{

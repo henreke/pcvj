@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TesteComandos">
+   <children>
+      <Label layoutX="42.0" layoutY="95.0" text="Temperatura 1:" />
+      <TextField id="temp1" fx:id="temp1" layoutX="42.0" layoutY="112.0" prefHeight="25.0" prefWidth="80.0" />
+      <Button layoutX="42.0" layoutY="150.0" mnemonicParsing="false" onAction="#enviarPergunta" text="Send" />
+   </children>
+</AnchorPane>

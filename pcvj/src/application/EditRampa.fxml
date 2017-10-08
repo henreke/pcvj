@@ -13,9 +13,9 @@
          <children>
             <TableView fx:id="rampaTable" editable="true" layoutX="25.0" layoutY="61.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn fx:id="temperaturaColumn" prefWidth="88.0" text="Temperatura" />
-                <TableColumn fx:id="tempoColumn" prefWidth="92.0" text="Tempo" />
-                  <TableColumn fx:id="executadaColumn" prefWidth="143.0" text="Executada" />
+                <TableColumn fx:id="temperaturaColumn" onEditCancel="#cancelEdit" onEditStart="#startEdit" prefWidth="88.0" text="Temperatura" />
+                <TableColumn fx:id="tempoColumn" onEditCancel="#cancelEdit" onEditStart="#startEdit" prefWidth="92.0" text="Tempo" />
+                  <TableColumn fx:id="executadaColumn" onEditCancel="#cancelEdit" onEditStart="#startEdit" prefWidth="143.0" text="Executada" />
               </columns>
             </TableView>
          </children></AnchorPane>

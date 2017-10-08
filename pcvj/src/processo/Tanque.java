@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.shape.Rectangle;
 
 public class Tanque {
@@ -13,7 +19,7 @@ public class Tanque {
 	private int tempoAquecimento, tempoDecorridoAquecimento;
 	private Timer timer;
 
-	private ArrayList<RampaAquecimento> rampa;
+	private ArrayList<RampaAquecimento> rampa = new ArrayList<RampaAquecimento>();
 	private int rampaAtual = 0;
 
 	public void aquecer(int tempo, float temperatura){
@@ -34,9 +40,16 @@ public class Tanque {
 
 	public void pararAquecer(){}
 
-	public void addRampaAquecimento(int tempo, float temperatura){
+	public int addRampaAquecimento(int tempo, float temperatura){
 
-		rampa.add(new RampaAquecimento(tempo,temperatura));
+		RampaAquecimento novarampa = new RampaAquecimento(tempo,temperatura);
+
+		rampa.add(novarampa);
+		return rampa.size()-1;
+	}
+
+	public RampaAquecimento getRampa(int i){
+		return rampa.get(i);
 	}
 
 	public void removeRampaAquecimento(int index){
@@ -112,39 +125,56 @@ public class Tanque {
 
 	}
 
-	class RampaAquecimento{
-		private int tempo;
-		private float temperatura;
-		private boolean finished;
+	public class RampaAquecimento{
+		private final IntegerProperty tempo;
+		private final FloatProperty temperatura;
+		private final BooleanProperty finished;
 
+
+		//private final IntegerProperty postalCode;
 
 		public RampaAquecimento(int tempo, float temperatura){
-			this.tempo = tempo;
-			this.temperatura = temperatura;
+			this.tempo = new SimpleIntegerProperty(tempo);
+			this.temperatura = new SimpleFloatProperty(temperatura);
+			this.finished = new SimpleBooleanProperty(false);
 		}
 
-		public RampaAquecimento(){}
+		public RampaAquecimento(){
+			this.tempo = new SimpleIntegerProperty(0);
+			this.temperatura = new SimpleFloatProperty(0);
+			this.finished = new SimpleBooleanProperty(false);
+		}
 
 
 		public void setTempo(int tempo){
-			this.tempo = tempo;
+			this.tempo.set(tempo);
 		}
 		public void setTemperatura(float temperatura){
-			this.temperatura = temperatura;
+			this.temperatura.set(temperatura);
 		}
 
 		public int getTempo(){
-			return tempo;
+			return tempo.get();
 		}
 		public float getTemperatura(){
-			return temperatura;
+			return temperatura.get();
 		}
 
 		public boolean isFinished(){
-			return finished;
+			return finished.get();
 		}
 		public void finish(){
-			finished = true;
+			finished.set(true);
+		}
+
+		public IntegerProperty tempoProperty() {
+	        return tempo;
+	    }
+		public FloatProperty temperaturaProperty(){
+			return temperatura;
+		}
+		public BooleanProperty finishedProperty(){
+			return finished;
 		}
 	}
 

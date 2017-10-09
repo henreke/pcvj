@@ -154,27 +154,27 @@ public class Tanque {
 		}
 
 		public int getTempo(){
-			return tempo.get();
+			return this.tempo.get();
 		}
 		public float getTemperatura(){
-			return temperatura.get();
+			return this.temperatura.get();
 		}
 
 		public boolean isFinished(){
-			return finished.get();
+			return this.finished.get();
 		}
 		public void finish(){
-			finished.set(true);
+			this.finished.set(true);
 		}
 
 		public IntegerProperty tempoProperty() {
-	        return tempo;
+	        return this.tempo;
 	    }
 		public FloatProperty temperaturaProperty(){
-			return temperatura;
+			return this.temperatura;
 		}
 		public BooleanProperty finishedProperty(){
-			return finished;
+			return this.finished;
 		}
 	}
 

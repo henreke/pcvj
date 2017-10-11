@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+import processo.PID;
+
 /**
  * Created by henreke on 7/24/2017.
  */
@@ -73,16 +75,16 @@ public class ComunicacaoTCP {
             String msg2 ='$'+msg+'$';
             canal.write(msg2.getBytes());
             byte[] respostaB = new byte[50];
-            
+
             aws.read(respostaB);
             resposta = new String(respostaB,StandardCharsets.UTF_8);
             aws.close();
             desconectar();
         }
-        
+
         return resposta;
     }
-    
+
     public void abrirValvula(int nValvula) throws IOException {
             String msg = TipoMSG.VALVULA+"#" + String.valueOf(nValvula)+"#" + String.valueOf(Comandos.ABRIR);
             sendMessage(msg);
@@ -99,7 +101,7 @@ public class ComunicacaoTCP {
                 +'#'+String.valueOf(pid.I)+'#'+String.valueOf(pid.D)+'#';
         sendMessage(msg);
     }
-    
+
     public String getUpdate(int tipo, String msg) throws IOException
     {
     	String msgenvio = TipoMSG.UPDATE+'#'+msg;
@@ -120,21 +122,6 @@ class Comandos{
 
 }
 
-class PID{
 
-    public int nPID = 0;
-    public float setPoint = 0;
-    public float P = 0;
-    public float I = 0;
-    public float D = 0;
-
-    public PID(int nPID, float setPoint, float P, float I, float D){
-        this.nPID = nPID;
-        this.P = P;
-        this.I =I;
-        this.D = D;
-        this.setPoint = setPoint;
-    }
-}
 
 

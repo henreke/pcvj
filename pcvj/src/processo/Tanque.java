@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import comunicacaoJava.ComunicacaoTCP;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
@@ -19,6 +20,9 @@ public class Tanque {
 	private int tempoAquecimento, tempoDecorridoAquecimento;
 	private Timer timer;
 
+	public PID pid;
+	private boolean Aquecendo = false;
+	private boolean AquecimentoConcluido = false;
 	private ArrayList<RampaAquecimento> rampa = new ArrayList<RampaAquecimento>();
 	private int rampaAtual = 0;
 
@@ -26,19 +30,32 @@ public class Tanque {
 		tempoDecorridoAquecimento = 0;
 		tempoAquecimento = tempo;
 		timer = new Timer();
-        timer.schedule(new relogio(), 1000);
+        timer.scheduleAtFixedRate(new relogio(),0, 1000);
+
+        alternarStatusAquecimento(true);
 
 	}
 
+
+	private void alternarStatusAquecimento(boolean status){
+		Aquecendo = status;
+		AquecimentoConcluido = !status;
+	}
 	public void aquecer(RampaAquecimento rampaquecer){
 
 		tempoDecorridoAquecimento = 0;
 		tempoAquecimento = rampaquecer.getTempo();
+
 		timer = new Timer();
-		timer.schedule(new RelogioRampa(), 1000);
+
+		timer.scheduleAtFixedRate(new RelogioRampa(),0, 1000);
+		alternarStatusAquecimento(true);
 	}
 
-	public void pararAquecer(){}
+	public void pararAquecer(){
+
+		alternarStatusAquecimento(false);
+	}
 
 	public int addRampaAquecimento(int tempo, float temperatura){
 
@@ -56,15 +73,23 @@ public class Tanque {
 		rampa.remove(index);
 	}
 
-	public void startRampaAquecimento(){
+	public boolean startRampaAquecimento(){
+
+		rampaAtual = 0;
 
 		if (rampa.isEmpty())
-			return;
-		while (rampa.get(0).isFinished())
+			return false;
+		while (rampa.get(rampaAtual).isFinished()){
 			rampaAtual++;
+			if (rampaAtual >= rampa.size())
+				return false;
+		}
+		aquecer(rampa.get(rampaAtual));
+		return true;
+	}
 
-
-
+	public ArrayList<RampaAquecimento> getArrayRampaAquecimento(){
+		return rampa;
 	}
 
 	public void drenar(){}
@@ -84,6 +109,31 @@ public class Tanque {
 	}
 
 
+	public float getTemperaturaAquecimentoAtual(){
+		if (rampaAtual < rampa.size())
+			return rampa.get(rampaAtual).getTemperatura();
+		else
+			return -1;
+	}
+	public int getTempoAquecimentoAtual(){
+		if (rampaAtual < rampa.size())
+			return tempoDecorridoAquecimento;
+		else
+			return -1;
+	}
+
+	public int getTempoAquecimentoTotal(){
+		if (rampaAtual < rampa.size())
+			return tempoAquecimento;
+		else
+			return -1;
+	}
+	public boolean Aquecendo(){
+		return Aquecendo;
+	}
+	public boolean AquecimentoConcluido(){
+		return AquecimentoConcluido;
+	}
 	class relogio extends TimerTask{
 
 
@@ -108,7 +158,7 @@ public class Tanque {
 		public void run() {
 			// TODO Auto-generated method stub
 			tempoDecorridoAquecimento++;
-			if (tempoDecorridoAquecimento > tempoAquecimento)
+			if (tempoDecorridoAquecimento >= tempoAquecimento)
 			{
 				timer.cancel();
 				rampa.get(rampaAtual).finish();

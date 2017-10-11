@@ -1,5 +1,7 @@
 package application;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import comunicacaoJava.ComunicacaoTCP;
 import javafx.fxml.FXML;
@@ -21,14 +23,22 @@ public class TesteComandos {
 	@FXML
 	private Rectangle tq1;
 
+	@FXML
+	private TextField statusAquecimento;
+
 	private MainApp mainApp;
 
 	public TesteComandos() {}
 
 	@FXML
-	private void initialize() {}
+	private void initialize() {
 
+		tanque1 = new Tanque();
+	}
 
+	public Tanque tanque1;
+	Timer timer;
+	int teste = 0;
 	public void setMainApp(MainApp mainApp) {
 
 		this.mainApp = mainApp;
@@ -56,15 +66,6 @@ public class TesteComandos {
 
 		try {
 
-//			FXMLLoader loader = new FXMLLoader();
-//			loader.setLocation(MainApp.class.getResource("EditRampa.fxml"));
-//			AnchorPane EditRampaview = (AnchorPane) loader.load();
-//
-//			//rootLayout.setCenter(testecomandosview);
-//
-//			EditRampa editrampa = loader.getController();
-//			//testecomandos.setMainApp(this);
-
 
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditRampa.fxml"));
 			Parent root1 = (Parent) fxmlLoader.load();
@@ -76,12 +77,43 @@ public class TesteComandos {
 
 			// Dï¿½ ao controlador acesso ï¿½ the main app.
 			EditRampa controller = fxmlLoader.getController();
-			//controller.setMainApp(this);
+			controller.setMainApp(this);
 
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@FXML
+	private void startAquecimentoTQ1(){
+		if (tanque1.startRampaAquecimento()) {
+
+			timer = new Timer();
+			timer.scheduleAtFixedRate(new RelogioRampa2(), 0, 500);
+		}
+		else
+			statusAquecimento.setText("Rampa de Aquecimento já foi executada");
+
+	}
+
+	class RelogioRampa2 extends TimerTask{
+
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			String status = "Aguardando....";
+			if (tanque1.Aquecendo())
+				 status = "Aquecendo em "+tanque1.getTemperaturaAquecimentoAtual()+", "+tanque1.getTempoAquecimentoAtual()+"s de "+" "+tanque1.getTempoAquecimentoTotal()+"s ";
+			else
+				timer.cancel();
+
+			statusAquecimento.setText(status);
+
+		}
+
+
 	}
 
 }

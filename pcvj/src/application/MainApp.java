@@ -59,6 +59,7 @@ public class MainApp extends Application {
 			rootLayout.setCenter(testecomandosview);
 
 			TesteComandos testecomandos = loader.getController();
+
 			testecomandos.setMainApp(this);
 		}
 		catch (IOException e) {

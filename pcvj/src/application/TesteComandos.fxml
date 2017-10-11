@@ -4,15 +4,19 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TesteComandos">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TesteComandos">
    <children>
       <Label layoutX="453.0" layoutY="187.0" text="Temperatura 1:" />
       <TextField id="temp1" fx:id="temp1" layoutX="471.0" layoutY="214.0" prefHeight="25.0" prefWidth="80.0" />
       <Button layoutX="471.0" layoutY="250.0" mnemonicParsing="false" onAction="#enviarPergunta" text="Send" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fffb0" height="144.0" layoutX="36.0" layoutY="115.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="118.0" />
-      <Rectangle fx:id="tq1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" layoutX="38.0" layoutY="185.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="114.0" />
-      <Button layoutX="162.0" layoutY="238.0" mnemonicParsing="false" onAction="#encherTq" text="Encher" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fffb0" height="144.0" layoutX="70.0" layoutY="132.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="118.0" />
+      <Rectangle fx:id="tq1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" layoutX="72.0" layoutY="202.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="114.0" />
+      <Button layoutX="221.0" layoutY="244.0" mnemonicParsing="false" onAction="#encherTq" text="Encher" />
+      <Circle fill="DODGERBLUE" layoutX="38.0" layoutY="132.0" radius="24.0" stroke="BLACK" strokeType="INSIDE" />
+      <Button layoutX="72.0" layoutY="288.0" mnemonicParsing="false" onAction="#startAquecimentoTQ1" text="Iniciar Aquecimento" />
+      <TextField fx:id="statusAquecimento" layoutX="72.0" layoutY="96.0" prefHeight="25.0" prefWidth="254.0" />
    </children>
 </AnchorPane>

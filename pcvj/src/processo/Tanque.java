@@ -1,5 +1,6 @@
 package processo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,21 +18,42 @@ public class Tanque {
 
 	private int numero;
 	private float level;
+	private float temperatura;
 	private int tempoAquecimento, tempoDecorridoAquecimento;
 	private Timer timer;
+	private int sensorVazaoEncher;
+	private int valvulaEncher;
+	private int sensorTemperatura;
 
-	public PID pid;
+	public PID pid = new PID(1,20,55,80,200);
 	private boolean Aquecendo = false;
 	private boolean AquecimentoConcluido = false;
 	private ArrayList<RampaAquecimento> rampa = new ArrayList<RampaAquecimento>();
 	private int rampaAtual = 0;
+	
+	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
+	Timer timerUpdate;
+	public Tanque(int sensorVazaoEncher,int sensorTemperatura, int valvulaEncher, int numeroTQ) {
+		this.sensorVazaoEncher = sensorVazaoEncher;
+		this.valvulaEncher = valvulaEncher;
+		this.numero = numeroTQ;
+		this.sensorTemperatura =  sensorTemperatura;
+		timerUpdate = new Timer();
+		timerUpdate.scheduleAtFixedRate(new relogioUpdate(), 2000, 5000);
+	}
 
 	public void aquecer(int tempo, float temperatura){
 		tempoDecorridoAquecimento = 0;
 		tempoAquecimento = tempo;
 		timer = new Timer();
         timer.scheduleAtFixedRate(new relogio(),0, 1000);
-
+        pid.setSetPoint(temperatura);
+        try {
+			comunicacao.sendPID(pid);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         alternarStatusAquecimento(true);
 
 	}
@@ -45,7 +67,13 @@ public class Tanque {
 
 		tempoDecorridoAquecimento = 0;
 		tempoAquecimento = rampaquecer.getTempo();
-
+		pid.setSetPoint(rampaquecer.getTemperatura());
+		try {
+			comunicacao.sendPID(pid);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		timer = new Timer();
 
 		timer.scheduleAtFixedRate(new RelogioRampa(),0, 1000);
@@ -94,14 +122,19 @@ public class Tanque {
 
 	public void drenar(){}
 
-	public static void encher(Rectangle tq1,double tempo){
+	public void encher(Rectangle tq1,float volume){
 
-		tq1.setHeight(tempo);
-		tq1.setY(tq1.getY()-10);
+		try {
+			comunicacao.sendEncher(sensorVazaoEncher, volume, valvulaEncher);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public float getLevel(){
-		return 0;
+		return level;
 	}
 
 	public int getTempoDecorridoAquecimento(){
@@ -134,6 +167,15 @@ public class Tanque {
 	public boolean AquecimentoConcluido(){
 		return AquecimentoConcluido;
 	}
+	
+	
+	public float getTemperatura() {
+		//comunicacao.ge
+		return temperatura;
+	}
+	
+	
+	
 	class relogio extends TimerTask{
 
 
@@ -171,9 +213,26 @@ public class Tanque {
 
 			}
 		}
-
-
 	}
+		class relogioUpdate extends TimerTask{
+
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				//Nivel
+				float[] dados = comunicacao.getLevelTemperature(sensorVazaoEncher, sensorTemperatura); 
+				//level = comunicacao.getLevel(sensorVazaoEncher);
+				level = dados[0];
+				temperatura =  dados[1];
+				
+				
+			}
+
+
+		}
+
+	
 
 	public class RampaAquecimento{
 		private final IntegerProperty tempo;

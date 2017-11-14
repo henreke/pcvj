@@ -25,19 +25,29 @@ public class TesteComandos {
 
 	@FXML
 	private TextField statusAquecimento;
+	
+	@FXML
+	private TextField volumeTQ1;
+	
+	@FXML
+	private TextField temperaturaTQ1;
 
 	private MainApp mainApp;
 
 	public TesteComandos() {}
+	
+	
 
 	@FXML
 	private void initialize() {
 
-		tanque1 = new Tanque();
+		tanque1 = new Tanque(1,1,1,1);
+		timerUpdate = new Timer();
+		timerUpdate.scheduleAtFixedRate(new Relogio(), 0, 1000);
 	}
 
 	public Tanque tanque1;
-	Timer timer;
+	Timer timer, timerUpdate;
 	int teste = 0;
 	public void setMainApp(MainApp mainApp) {
 
@@ -46,7 +56,7 @@ public class TesteComandos {
 
 	@FXML
 	private void enviarPergunta() {
-		ComunicacaoTCP comunicacao = new ComunicacaoTCP("192.168.25.117", 1188);
+		ComunicacaoTCP comunicacao = new ComunicacaoTCP("192.168.25.177", 1188);
 		try {
 			temp1.setText(comunicacao.getUpdate(1, ""));
 		} catch (IOException e) {
@@ -58,7 +68,8 @@ public class TesteComandos {
 	@FXML
 	private void encherTq(){
 
-		Tanque.encher(tq1,tq1.getHeight()+10);
+		tanque1.encher(tq1,11);
+		
 	}
 
 	@FXML
@@ -110,6 +121,20 @@ public class TesteComandos {
 				timer.cancel();
 
 			statusAquecimento.setText(status);
+
+		}
+
+
+	}
+	
+	class Relogio extends TimerTask{
+
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub			
+			volumeTQ1.setText(String.valueOf(tanque1.getLevel()));
+			temperaturaTQ1.setText(String.valueOf(tanque1.getTemperatura()));
 
 		}
 

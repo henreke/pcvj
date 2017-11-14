@@ -1,7 +1,10 @@
 package comunicacaoJava;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -18,6 +21,9 @@ public class ComunicacaoTCP {
     OutputStream canal;
     private String ip;
     private int porta;
+    
+    public static String ip_default = "192.168.25.177";
+    public static int porta_default = 1188;
 
     public void setIp(String ip){
         this.ip = ip;
@@ -35,10 +41,11 @@ public class ComunicacaoTCP {
     public OutputStream conectar(){
 
         try {
-            if (conexao == null){
+            //if (conexao == null){
                 conexao = new Socket(this.ip,this.porta);
+                
                // conexao.connect(conexao.getRemoteSocketAddress(), 3000);
-            }
+          //  }
             return conexao.getOutputStream();
         } catch (IOException e) {
             return null;
@@ -71,18 +78,26 @@ public class ComunicacaoTCP {
         canal = conectar();
         String resposta ="";
         if (canal != null) {
-        	DataInputStream aws = new DataInputStream(conexao.getInputStream());
-            String msg2 ='$'+msg+'$';
+        	
+            String msg2 ="$"+msg+"$";
             canal.write(msg2.getBytes());
+            InputStream aws = conexao.getInputStream();
             byte[] respostaB = new byte[50];
-
+            
+            try {
+    			Thread.sleep(20);
+    		} catch (InterruptedException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+            
             aws.read(respostaB);
             resposta = new String(respostaB,StandardCharsets.UTF_8);
-            aws.close();
+
             desconectar();
         }
 
-        return resposta;
+        return resposta.trim();
     }
 
     public void abrirValvula(int nValvula) throws IOException {
@@ -96,24 +111,78 @@ public class ComunicacaoTCP {
     }
 
     public void sendPID(PID pid) throws IOException {
-        String msg = TipoMSG.PID+'#'+String.valueOf(pid.setPoint) +'#'
-                +String.valueOf(pid.nPID)+'#'+String.valueOf(pid.P)
-                +'#'+String.valueOf(pid.I)+'#'+String.valueOf(pid.D)+'#';
+        String msg = TipoMSG.PID+"#"+String.valueOf(pid.setPoint) +"#"
+                +String.valueOf(pid.nPID)+"#"+String.valueOf(pid.P)
+                +"#"+String.valueOf(pid.I)+"#"+String.valueOf(pid.D)+"#";
         sendMessage(msg);
     }
 
     public String getUpdate(int tipo, String msg) throws IOException
     {
-    	String msgenvio = TipoMSG.UPDATE+'#'+msg;
+    	String msgenvio = TipoMSG.UPDATE+"#"+msg;
     	return sendMessageUpdate(msgenvio);
+    }
+    
+    public void sendEncher(int Nsensor, float quantidade, int Nvalvula) throws IOException{
+    	String msgenvio = TipoMSG.ENCHERTANQUE+"#"+quantidade+"#"+Nvalvula +"#"+Nsensor+"#";
+    	sendMessage(msgenvio);
+    }
+    
+    public float getLevel(int Nsensor) {
+    		
+    	String msg =TipoMSG.UPDATE+"#"+ TipoUpdate.LEVEL+"#"+Nsensor+"#";
+    	try {
+			String retorno = sendMessageUpdate(msg);
+			if (retorno.charAt(0) == '$' && retorno.charAt(retorno.length() -1) =='$') {
+				retorno =  retorno.substring(1, retorno.length()-1);
+				String[] valores = retorno.split("#");
+				if ( Integer.parseInt(valores[0]) == Nsensor)
+				{
+					return Float.parseFloat(valores[1]);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0.0f;
+		}
+    	return 0.0f;
+    }
+    
+    public float[] getLevelTemperature(int NsensorLevel, int NsensorTemperatura) {
+    	
+    	String msg = TipoMSG.UPDATE+"#"+TipoUpdate.LEVEL_TEMPERATURE+"#"+NsensorLevel+"#"+NsensorTemperatura+"#";
+    	float[] saida = new float[2];
+    	try {
+			String retorno = sendMessageUpdate(msg);
+			System.out.println(retorno);
+			if (retorno.charAt(0) == '$' && retorno.charAt(retorno.length() -1) =='$') {
+				retorno =  retorno.substring(1, retorno.length()-1);
+				String[] valores =  retorno.split("#");
+				if (Integer.parseInt(valores[0])==NsensorLevel)
+					saida[0] = Float.parseFloat(valores[1]);
+				if (Integer.parseInt(valores[2]) == NsensorTemperatura)
+					saida[1] = Float.parseFloat(valores[3]);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return saida;
     }
 }
 class TipoMSG{
 
     public static final char VALVULA = 10;
     public static final char PID = 11;
-    public static final char BOMBA = 12;
-    public static final char UPDATE = 13;
+    public static final char BOMBA = 12;  
+    public static final char ENCHERTANQUE = 14;
+    public static final char UPDATE = 16;
+}
+class TipoUpdate{
+	public static final char LEVEL = 33;
+	public static final char LEVEL_TEMPERATURE = 38;
 }
 class Comandos{
 

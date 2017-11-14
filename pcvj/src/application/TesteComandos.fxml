@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -7,16 +12,116 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TesteComandos">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TesteComandos">
    <children>
-      <Label layoutX="453.0" layoutY="187.0" text="Temperatura 1:" />
-      <TextField id="temp1" fx:id="temp1" layoutX="471.0" layoutY="214.0" prefHeight="25.0" prefWidth="80.0" />
-      <Button layoutX="471.0" layoutY="250.0" mnemonicParsing="false" onAction="#enviarPergunta" text="Send" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fffb0" height="144.0" layoutX="70.0" layoutY="132.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="118.0" />
-      <Rectangle fx:id="tq1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" layoutX="72.0" layoutY="202.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="114.0" />
-      <Button layoutX="221.0" layoutY="244.0" mnemonicParsing="false" onAction="#encherTq" text="Encher" />
-      <Circle fill="DODGERBLUE" layoutX="38.0" layoutY="132.0" radius="24.0" stroke="BLACK" strokeType="INSIDE" />
-      <Button layoutX="72.0" layoutY="288.0" mnemonicParsing="false" onAction="#startAquecimentoTQ1" text="Iniciar Aquecimento" />
-      <TextField fx:id="statusAquecimento" layoutX="72.0" layoutY="96.0" prefHeight="25.0" prefWidth="254.0" />
+      <Label layoutX="228.0" layoutY="433.0" text="Temperatura 1:" />
+      <TextField id="temp1" fx:id="temp1" layoutX="246.0" layoutY="456.0" prefHeight="25.0" prefWidth="80.0" />
+      <Button layoutX="286.0" layoutY="484.0" mnemonicParsing="false" onAction="#enviarPergunta" text="Send" />
+      <Group id="GTanque1" layoutX="14.0" layoutY="-18.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fffb0" height="144.0" layoutX="41.0" layoutY="83.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="118.0" />
+            <Rectangle fx:id="tq1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" layoutX="43.0" layoutY="153.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="114.0" />
+            <Label layoutX="86.0" layoutY="180.0" text="HLT" />
+         </children>
+      </Group>
+      <Button layoutX="70.0" layoutY="27.0" mnemonicParsing="false" onAction="#encherTq" text="Encher Fase 1" />
+      <Button layoutX="411.0" layoutY="484.0" mnemonicParsing="false" onAction="#startAquecimentoTQ1" text="Iniciar Aquecimento" />
+      <TextField fx:id="statusAquecimento" layoutX="493.0" layoutY="114.0" prefHeight="25.0" prefWidth="254.0" />
+      <Group id="GTanque2" layoutX="-21.0" layoutY="15.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fffb0" height="144.0" layoutX="248.0" layoutY="203.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="118.0" />
+            <Rectangle fx:id="tq11" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" layoutX="250.0" layoutY="273.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="114.0" />
+            <Label layoutX="293.0" layoutY="300.0" text="MT" />
+         </children>
+      </Group>
+      <Group id="GTanque3">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fffb0" height="144.0" layoutX="551.0" layoutY="261.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="118.0" />
+            <Rectangle fx:id="tq111" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" layoutX="553.0" layoutY="330.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="114.0" />
+            <Label layoutX="596.0" layoutY="357.0" text="BT" />
+         </children>
+      </Group>
+      <Group id="GValvula1" layoutX="74.0" layoutY="-119.0">
+         <children>
+            <Line endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
+            <Polygon fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+            </Polygon>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
+            <Polygon fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+              <points>
+                <Double fx:value="-50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="0.0" />
+                <Double fx:value="-60.0" />
+              </points>
+            </Polygon>
+         </children>
+      </Group>
+      <Group id="GValvula2" layoutX="67.0" layoutY="44.0">
+         <children>
+            <Line endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
+            <Polygon fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+            </Polygon>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
+            <Polygon fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+            </Polygon>
+         </children>
+      </Group>
+      <Group id="GSolenoide1" layoutX="-85.0" layoutY="-289.0">
+         <children>
+            <Line endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
+            <Polygon fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+            </Polygon>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
+            <Polygon fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+            </Polygon>
+         </children>
+      </Group>
+      <Label layoutX="179.0" layoutY="72.0" text="Volume:" />
+      <TextField fx:id="volumeTQ1" layoutX="225.0" layoutY="68.0" prefHeight="25.0" prefWidth="43.0" />
+      <Label layoutX="179.0" layoutY="106.0" text="Temperatura:" />
+      <TextField fx:id="temperaturaTQ1" layoutX="252.0" layoutY="102.0" prefHeight="25.0" prefWidth="56.0" />
    </children>
 </AnchorPane>

@@ -171,6 +171,50 @@ public class ComunicacaoTCP {
     	
     	return saida;
     }
+    
+    public String getStatusValvulas(int[] valvulas) {
+    	
+    	String msg = TipoMSG.UPDATE+"#"+TipoUpdate.VALVULAS+"#"+valvulas.length;
+    	for (int i=0;i<valvulas.length;i++) {
+    		msg+="#"+valvulas[i];
+    	}
+    	msg+="#";
+    	
+    	try {
+			String retorno = sendMessageUpdate(msg);
+			System.out.println(retorno);
+			if (retorno.charAt(0) == '$' && retorno.charAt(retorno.length() -1) =='$') {
+				retorno =  retorno.substring(2, retorno.length()-1);
+				return retorno;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
+    	return "";
+    }
+    
+    public float[] getFlows() {
+    	String msg = TipoMSG.UPDATE+"#"+TipoUpdate.FLOW+"#";
+    	try {
+    		String retorno = sendMessageUpdate(msg);
+    		if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
+    			retorno = retorno.substring(2, retorno.length()-2);
+    			String[] valores = retorno.split("#");
+    			float[] valoresretorno = new float[valores.length];
+    			for (int i =0; i< valoresretorno.length; i++)
+    				valoresretorno[i] = Float.parseFloat(valores[i]);
+    			return valoresretorno;
+    		}
+    	}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    	
+    	return null;
+    }
 }
 class TipoMSG{
 
@@ -182,7 +226,9 @@ class TipoMSG{
 }
 class TipoUpdate{
 	public static final char LEVEL = 33;
+	public static final char FLOW = 36;
 	public static final char LEVEL_TEMPERATURE = 38;
+	public static final char VALVULAS = 39;
 }
 class Comandos{
 

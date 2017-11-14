@@ -11,9 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import processo.Tanque;
+import processo.Valvulas;
 
 public class TesteComandos {
 
@@ -31,6 +34,17 @@ public class TesteComandos {
 	
 	@FXML
 	private TextField temperaturaTQ1;
+	
+	//Declaracao das valvulas
+	//1
+	@FXML
+	private Rectangle atuadorV1;
+	@FXML
+	private Polygon corpoV11;
+	@FXML
+	private Polygon corpoV12;
+	@FXML
+	private Line linhaV1;
 
 	private MainApp mainApp;
 
@@ -41,12 +55,15 @@ public class TesteComandos {
 	@FXML
 	private void initialize() {
 
-		tanque1 = new Tanque(1,1,1,1);
+		tanque1 = new Tanque(1,1,0,1);
+		valvulas = new Valvulas();
+		adicionarValvulas();
 		timerUpdate = new Timer();
 		timerUpdate.scheduleAtFixedRate(new Relogio(), 0, 1000);
 	}
 
 	public Tanque tanque1;
+	public Valvulas valvulas;
 	Timer timer, timerUpdate;
 	int teste = 0;
 	public void setMainApp(MainApp mainApp) {
@@ -107,7 +124,18 @@ public class TesteComandos {
 			statusAquecimento.setText("Rampa de Aquecimento já foi executada");
 
 	}
+	
+	@FXML
+	private void testeStatusValvula()
+	{
+		valvulas.updateStatus();
+		if (valvulas.getStatusValvula(0) == Valvulas.ABRINDO)
+			System.out.println("abrindp");
+	}
 
+	private void adicionarValvulas() {
+		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV1, corpoV11, corpoV12, linhaV1);
+	}
 	class RelogioRampa2 extends TimerTask{
 
 

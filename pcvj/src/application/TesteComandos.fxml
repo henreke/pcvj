@@ -95,8 +95,8 @@
       </Group>
       <Group id="GSolenoide1" layoutX="-85.0" layoutY="-289.0">
          <children>
-            <Line endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
-            <Polygon fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Line fx:id="linhaV1" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
+            <Polygon fx:id="corpoV12" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -106,8 +106,8 @@
                   <Double fx:value="-60.0" />
                </points>
             </Polygon>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
-            <Polygon fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Rectangle fx:id="atuadorV1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
+            <Polygon fx:id="corpoV11" fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -123,5 +123,6 @@
       <TextField fx:id="volumeTQ1" layoutX="225.0" layoutY="68.0" prefHeight="25.0" prefWidth="43.0" />
       <Label layoutX="179.0" layoutY="106.0" text="Temperatura:" />
       <TextField fx:id="temperaturaTQ1" layoutX="252.0" layoutY="102.0" prefHeight="25.0" prefWidth="56.0" />
+      <Button layoutX="180.0" layoutY="27.0" mnemonicParsing="false" onAction="#testeStatusValvula" text="Valvulas" />
    </children>
 </AnchorPane>

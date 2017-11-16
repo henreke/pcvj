@@ -17,6 +17,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import processo.Tanque;
 import processo.Valvulas;
+import processo.Vazoes;
 
 public class TesteComandos {
 
@@ -36,6 +37,16 @@ public class TesteComandos {
 	private TextField temperaturaTQ1;
 	
 	//Declaracao das valvulas
+	//0
+	@FXML
+	private Rectangle atuadorV0;
+	@FXML
+	private Polygon corpoV01;
+	@FXML
+	private Polygon corpoV02;
+	@FXML
+	private Line linhaV0;
+	
 	//1
 	@FXML
 	private Rectangle atuadorV1;
@@ -45,6 +56,79 @@ public class TesteComandos {
 	private Polygon corpoV12;
 	@FXML
 	private Line linhaV1;
+	
+	//2
+	@FXML
+	private Rectangle atuadorV2;
+	@FXML
+	private Polygon corpoV21;
+	@FXML
+	private Polygon corpoV22;
+	@FXML
+	private Line linhaV2;
+	
+	//0
+	@FXML
+	private Rectangle atuadorV3;
+	@FXML
+	private Polygon corpoV31;
+	@FXML
+	private Polygon corpoV32;
+	@FXML
+	private Line linhaV3;
+
+	//4
+	@FXML
+	private Rectangle atuadorV4;
+	@FXML
+	private Polygon corpoV41;
+	@FXML
+	private Polygon corpoV42;
+	@FXML
+	private Line linhaV4;
+
+	//5
+	@FXML
+	private Rectangle atuadorV5;
+	@FXML
+	private Polygon corpoV51;
+	@FXML
+	private Polygon corpoV52;
+	@FXML
+	private Line linhaV5;
+
+	//6
+	@FXML
+	private Rectangle atuadorV6;
+	@FXML
+	private Polygon corpoV61;
+	@FXML
+	private Polygon corpoV62;
+	@FXML
+	private Line linhaV6;
+
+	//7
+	@FXML
+	private Rectangle atuadorV7;
+	@FXML
+	private Polygon corpoV71;
+	@FXML
+	private Polygon corpoV72;
+	@FXML
+	private Line linhaV7;
+	//8
+	@FXML
+	private Rectangle atuadorV8;
+	@FXML
+	private Polygon corpoV81;
+	@FXML
+	private Polygon corpoV82;
+	@FXML
+	private Line linhaV8;
+	
+	//Declarao Medidores Vazao
+	@FXML
+	private TextField medidorvazao1;
 
 	private MainApp mainApp;
 
@@ -58,12 +142,15 @@ public class TesteComandos {
 		tanque1 = new Tanque(1,1,0,1);
 		valvulas = new Valvulas();
 		adicionarValvulas();
+		vazoes = new Vazoes();
 		timerUpdate = new Timer();
-		timerUpdate.scheduleAtFixedRate(new Relogio(), 0, 1000);
+		timerUpdate.scheduleAtFixedRate(new Relogio(), 2000, 1000);
+		
 	}
 
 	public Tanque tanque1;
 	public Valvulas valvulas;
+	public Vazoes vazoes;
 	Timer timer, timerUpdate;
 	int teste = 0;
 	public void setMainApp(MainApp mainApp) {
@@ -132,9 +219,19 @@ public class TesteComandos {
 		if (valvulas.getStatusValvula(0) == Valvulas.ABRINDO)
 			System.out.println("abrindp");
 	}
+	
+
 
 	private void adicionarValvulas() {
+		valvulas.addValvula(0, Valvulas.SOLENOIDE, atuadorV0, corpoV01, corpoV02, linhaV0);
 		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV1, corpoV11, corpoV12, linhaV1);
+		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV2, corpoV21, corpoV22, linhaV2);
+		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV3, corpoV31, corpoV32, linhaV3);
+		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV4, corpoV41, corpoV42, linhaV4);
+		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV5, corpoV51, corpoV52, linhaV5);
+		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV6, corpoV61, corpoV62, linhaV6);
+		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV7, corpoV71, corpoV72, linhaV7);
+		valvulas.addValvula(0, Valvulas.SOLENOIDE, atuadorV8, corpoV81, corpoV82, linhaV8);
 	}
 	class RelogioRampa2 extends TimerTask{
 
@@ -163,6 +260,8 @@ public class TesteComandos {
 			// TODO Auto-generated method stub			
 			volumeTQ1.setText(String.valueOf(tanque1.getLevel()));
 			temperaturaTQ1.setText(String.valueOf(tanque1.getTemperatura()));
+			medidorvazao1.setText(String.valueOf(vazoes.getVazao(0))+"l/m");
+			//System.out.println(String.valueOf(vazoes.getVazao(0))+"l/m");
 
 		}
 

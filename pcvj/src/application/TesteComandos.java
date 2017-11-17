@@ -129,6 +129,13 @@ public class TesteComandos {
 	//Declarao Medidores Vazao
 	@FXML
 	private TextField medidorvazao1;
+	
+	@FXML
+	private TextField medidorvazao2;
+	@FXML
+	private TextField medidorvazao3;
+	@FXML
+	private TextField medidorvazao4;
 
 	private MainApp mainApp;
 
@@ -221,7 +228,7 @@ public class TesteComandos {
 	}
 	
 
-
+	
 	private void adicionarValvulas() {
 		valvulas.addValvula(0, Valvulas.SOLENOIDE, atuadorV0, corpoV01, corpoV02, linhaV0);
 		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV1, corpoV11, corpoV12, linhaV1);
@@ -258,9 +265,14 @@ public class TesteComandos {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub			
+			valvulas.updateStatus();
+			vazoes.updateVazoes();
 			volumeTQ1.setText(String.valueOf(tanque1.getLevel()));
 			temperaturaTQ1.setText(String.valueOf(tanque1.getTemperatura()));
 			medidorvazao1.setText(String.valueOf(vazoes.getVazao(0))+"l/m");
+			medidorvazao2.setText(String.valueOf(vazoes.getVazao(1))+"l/m");
+			medidorvazao3.setText(String.valueOf(vazoes.getVazao(2))+"l/m");
+			//medidorvazao4.setText(String.valueOf(vazoes.getVazao(3))+"l/m");
 			//System.out.println(String.valueOf(vazoes.getVazao(0))+"l/m");
 
 		}

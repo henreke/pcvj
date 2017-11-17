@@ -9,9 +9,9 @@ import javafx.scene.shape.Rectangle;
 
 public class Valvulas {
 	
-	public static char ABERTA = 65;
+	public static char ABERTA = 68;
 	public static char ABRINDO = 65;
-	public static char FECHADA = 66;
+	public static char FECHADA = 69;
 	public static char FECHANDO = 66;
 	public static char MOTORIZADA = 10;
 	public static char SOLENOIDE = 11;
@@ -83,13 +83,13 @@ class Valvula {
 	}
 	
 	void checkStatus() {
-		if (status == Valvulas.ABERTA) {
+		if ((status == Valvulas.ABERTA) ||(tipo == Valvulas.SOLENOIDE && status == Valvulas.ABRINDO)) {
 			System.out.println("Aberta");
 			corpo1.setFill(Color.GREEN);
 			corpo2.setFill(Color.GREEN);
 			atuador.setFill(Color.GREEN);
 			linha.setStroke(Color.GREEN);
-		} else if (status == Valvulas.FECHADA) {
+		} else if ((status == Valvulas.FECHADA) || (tipo == Valvulas.SOLENOIDE && status == Valvulas.FECHANDO)) {
 			corpo1.setFill(Color.RED);
 			corpo2.setFill(Color.RED);
 			atuador.setFill(Color.RED);

@@ -49,58 +49,6 @@
       </Group>
       <Group id="GValvula1" layoutX="152.0" layoutY="-109.0">
          <children>
-            <Line endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
-            <Polygon fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="-50.0" />
-                  <Double fx:value="40.0" />
-                  <Double fx:value="50.0" />
-                  <Double fx:value="40.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-60.0" />
-               </points>
-            </Polygon>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
-            <Polygon fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
-              <points>
-                <Double fx:value="-50.0" />
-                <Double fx:value="40.0" />
-                <Double fx:value="50.0" />
-                <Double fx:value="40.0" />
-                <Double fx:value="0.0" />
-                <Double fx:value="-60.0" />
-              </points>
-            </Polygon>
-         </children>
-      </Group>
-      <Group id="GValvula2" layoutX="382.0" layoutY="15.0">
-         <children>
-            <Line endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
-            <Polygon fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="-50.0" />
-                  <Double fx:value="40.0" />
-                  <Double fx:value="50.0" />
-                  <Double fx:value="40.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-60.0" />
-               </points>
-            </Polygon>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
-            <Polygon fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
-               <points>
-                  <Double fx:value="-50.0" />
-                  <Double fx:value="40.0" />
-                  <Double fx:value="50.0" />
-                  <Double fx:value="40.0" />
-                  <Double fx:value="0.0" />
-                  <Double fx:value="-60.0" />
-               </points>
-            </Polygon>
-         </children>
-      </Group>
-      <Group id="GSolenoide1" layoutX="-88.0" layoutY="-258.0">
-         <children>
             <Line fx:id="linhaV1" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV12" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
@@ -114,6 +62,58 @@
             </Polygon>
             <Rectangle fx:id="atuadorV1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
             <Polygon fx:id="corpoV11" fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+              <points>
+                <Double fx:value="-50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="0.0" />
+                <Double fx:value="-60.0" />
+              </points>
+            </Polygon>
+         </children>
+      </Group>
+      <Group id="GValvula2" layoutX="382.0" layoutY="15.0">
+         <children>
+            <Line fx:id="linhaV2" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
+            <Polygon fx:id="corpoV22" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+            </Polygon>
+            <Rectangle fx:id="atuadorV2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
+            <Polygon fx:id="corpoV21" fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+            </Polygon>
+         </children>
+      </Group>
+      <Group id="GSolenoide1" layoutX="-88.0" layoutY="-258.0">
+         <children>
+            <Line fx:id="linhaV0" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
+            <Polygon fx:id="corpoV02" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+            </Polygon>
+            <Rectangle fx:id="atuadorV0" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
+            <Polygon fx:id="corpoV01" fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -151,7 +151,7 @@
             <Line endX="100.0" layoutX="115.0" layoutY="517.0" rotate="90.0" scaleX="0.1" startX="-100.0" stroke="#1453cc" strokeWidth="3.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="23.0" layoutX="101.0" layoutY="526.0" stroke="BLACK" strokeType="INSIDE" width="29.0" />
             <Circle fill="DODGERBLUE" layoutX="115.0" layoutY="487.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
-            <TextField fx:id="medidorvazao111" editable="false" layoutX="92.0" layoutY="475.0" prefHeight="25.0" prefWidth="47.0" text="100.00l/m">
+            <TextField fx:id="medidorvazao3" editable="false" layoutX="92.0" layoutY="475.0" prefHeight="25.0" prefWidth="47.0" text="100.00l/m">
                <font>
                   <Font size="10.0" />
                </font>
@@ -160,8 +160,8 @@
       </Group>
       <Group id="GValvula3" layoutX="394.0" layoutY="-145.0">
          <children>
-            <Line endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
-            <Polygon fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Line fx:id="linhaV3" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
+            <Polygon fx:id="corpoV32" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -171,8 +171,8 @@
                   <Double fx:value="-60.0" />
                </points>
             </Polygon>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
-            <Polygon fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Rectangle fx:id="atuadorV3" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
+            <Polygon fx:id="corpoV31" fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -186,8 +186,8 @@
       </Group>
       <Group id="GValvula4" layoutX="712.0" layoutY="-66.0">
          <children>
-            <Line endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
-            <Polygon fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Line fx:id="linhaV6" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
+            <Polygon fx:id="corpoV62" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -197,8 +197,8 @@
                   <Double fx:value="-60.0" />
                </points>
             </Polygon>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
-            <Polygon fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Rectangle fx:id="atuadorV6" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
+            <Polygon fx:id="corpoV61" fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -212,8 +212,8 @@
       </Group>
       <Group id="GValvula5" layoutX="645.0">
          <children>
-            <Line endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
-            <Polygon fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Line fx:id="linhaV4" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
+            <Polygon fx:id="corpoV42" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -223,8 +223,8 @@
                   <Double fx:value="-60.0" />
                </points>
             </Polygon>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
-            <Polygon fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Rectangle fx:id="atuadorV4" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
+            <Polygon fx:id="corpoV41" fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -238,8 +238,8 @@
       </Group>
       <Group id="GValvula6" layoutX="718.0">
          <children>
-            <Line endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
-            <Polygon fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Line fx:id="linhaV5" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
+            <Polygon fx:id="corpoV52" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -249,8 +249,8 @@
                   <Double fx:value="-60.0" />
                </points>
             </Polygon>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
-            <Polygon fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Rectangle fx:id="atuadorV5" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
+            <Polygon fx:id="corpoV51" fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -264,8 +264,8 @@
       </Group>
       <Group id="GValvula7" layoutX="825.0" layoutY="81.0">
          <children>
-            <Line endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
-            <Polygon fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Line fx:id="linhaV7" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
+            <Polygon fx:id="corpoV72" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -275,8 +275,8 @@
                   <Double fx:value="-60.0" />
                </points>
             </Polygon>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
-            <Polygon fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Rectangle fx:id="atuadorV7" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
+            <Polygon fx:id="corpoV71" fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -307,7 +307,7 @@
             <Line endX="100.0" layoutX="115.0" layoutY="517.0" rotate="90.0" scaleX="0.1" startX="-100.0" stroke="#1453cc" strokeWidth="3.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="23.0" layoutX="101.0" layoutY="526.0" stroke="BLACK" strokeType="INSIDE" width="29.0" />
             <Circle fill="DODGERBLUE" layoutX="115.0" layoutY="487.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
-            <TextField fx:id="medidorvazao11" editable="false" layoutX="92.0" layoutY="475.0" prefHeight="25.0" prefWidth="47.0" text="100.00l/m">
+            <TextField fx:id="medidorvazao2" editable="false" layoutX="92.0" layoutY="475.0" prefHeight="25.0" prefWidth="47.0" text="100.00l/m">
                <font>
                   <Font size="10.0" />
                </font>
@@ -347,8 +347,8 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="17.0" layoutX="185.0" layoutY="226.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="17.0" />
       <Group id="GValvula8" layoutX="891.0" layoutY="122.0">
          <children>
-            <Line endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
-            <Polygon fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Line fx:id="linhaV8" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
+            <Polygon fx:id="corpoV82" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />
@@ -358,8 +358,8 @@
                   <Double fx:value="-60.0" />
                </points>
             </Polygon>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
-            <Polygon fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
+            <Rectangle fx:id="atuadorV8" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="25.0" layoutX="105.0" layoutY="303.0" stroke="BLACK" strokeType="INSIDE" width="27.0" />
+            <Polygon fx:id="corpoV81" fill="DODGERBLUE" layoutX="109.0" layoutY="354.0" rotate="90.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
                <points>
                   <Double fx:value="-50.0" />
                   <Double fx:value="40.0" />

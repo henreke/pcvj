@@ -1,6 +1,8 @@
 package application;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -65,6 +67,13 @@ public class MainApp extends Application {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void stop() {
+		System.out.println("Finalizando");
+		//ExecutorService service = Executors.newCachedThreadPool();
+		//service.shutdownNow();
 	}
 
 

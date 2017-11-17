@@ -20,8 +20,8 @@ public class Vazoes {
 		for (int i=0; i<Nmedidores;i++)
 			vazoes.add(new Vazao());
 		
-		timerUpdate = new Timer();
-		timerUpdate.scheduleAtFixedRate(new relogioUpdate(), 2000, 1000);
+		//timerUpdate = new Timer();
+		//timerUpdate.scheduleAtFixedRate(new relogioUpdate(), 2000, 1000);
 	}
 	
 	public float getVazao(int indice) {
@@ -31,7 +31,7 @@ public class Vazoes {
 		return vazoes.get(indice).getAcumulado();
 	}
 	
-	private void updateVazoes() {
+	public void updateVazoes() {
 		float[][] Vvazoes = comunicacao.getFlows();
 		for (int i=0;i<Nmedidores;i++){
 			vazoes.get(i).setInstAcumulado(Vvazoes[i][0], Vvazoes[i][1]);

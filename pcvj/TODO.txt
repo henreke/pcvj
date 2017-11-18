@@ -1,0 +1,3 @@
+1-Criar a opção de ligar/desligar resistencias no firm;
+2-Criar a opção de ligar/desligar PID;
+3-Criar rotina de zerar os acumulados dos medidores

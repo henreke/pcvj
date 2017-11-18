@@ -231,7 +231,7 @@ public class TesteComandos {
 	{
 		valvulas.updateStatus();
 		if (valvulas.getStatusValvula(0) == Valvulas.ABRINDO)
-			System.out.println("abrindp");
+			System.out.println("abrindo");
 	}
 
 

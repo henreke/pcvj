@@ -1,4 +1,5 @@
 package processo;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import comunicacaoJava.ComunicacaoTCP;
@@ -8,34 +9,36 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
 public class Valvulas {
-	
+
 	public static char ABERTA = 68;
 	public static char ABRINDO = 65;
 	public static char FECHADA = 69;
 	public static char FECHANDO = 66;
 	public static char MOTORIZADA = 10;
 	public static char SOLENOIDE = 11;
-	
+
 	private ArrayList<Valvula> valvulas = new ArrayList<Valvula>();
 	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
-	
 
-	
+
+
 	public void addValvula(int numero,int tipo, Rectangle atuador, Polygon corpo1, Polygon corpo2, Line linha) {
-		
+
 		valvulas.add(new Valvula(numero,tipo,atuador,corpo1,corpo2,linha));
 	}
-	
+
 	public int getStatusValvula(int indice) {
 		return valvulas.get(indice).getStatus();
 	}
-	
+	public Valvula getValvula(int indice){
+		return valvulas.get(indice);
+	}
 	public void updateStatus() {
-		
+
 		int[] valvulasstatus = new int[valvulas.size()];
 		for (int i=0;i<valvulas.size();i++)
 			valvulasstatus[i] = valvulas.get(i).getNumero();
-		
+
 		String Sstatus = comunicacao.getStatusValvulas(valvulasstatus);
 		System.out.println(Sstatus);
 		String[] statusdivido = Sstatus.split("#");
@@ -43,12 +46,13 @@ public class Valvulas {
 				valvulas.get(i).setStatus(statusdivido[i].charAt(0));
 				valvulas.get(i).checkStatus();
 		}
-		
+
 	}
 
-}
-class Valvula {
-	
+
+
+public class Valvula {
+
 	private int status;
 	private int numero;
 	private int tipo;
@@ -75,13 +79,25 @@ class Valvula {
 	void abrir() {
 		atuador.setFill(Color.GREEN);
 		linha.setFill(Color.GREEN);
+		try {
+			comunicacao.abrirValvula(numero);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
+
 	void fechar() {
 		atuador.setFill(Color.RED);
 		linha.setFill(Color.RED);
+		try {
+			comunicacao.fecharValvula(numero);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
+
 	void checkStatus() {
 		if ((status == Valvulas.ABERTA) ||(tipo == Valvulas.SOLENOIDE && status == Valvulas.ABRINDO)) {
 			System.out.println("Aberta");
@@ -96,7 +112,8 @@ class Valvula {
 			linha.setStroke(Color.RED);
 		}
 	}
-	
-	
-	
+
+
+
+}
 }

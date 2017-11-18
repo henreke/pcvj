@@ -1,6 +1,7 @@
 package processo;
 
 import processo.Valvulas.Valvula;
+import processo.Vazoes.Vazao;
 
 public class Etapas{
 
@@ -56,9 +57,10 @@ public class Etapas{
 		}
 		public void executarEtapa(){
 
-			HLT.encher(volumeEncher);
 			executando = true;
 			concluida = false;
+			HLT.encher(volumeEncher);
+
 
 		}
 
@@ -117,9 +119,10 @@ public class Etapas{
 		}
 
 		public void executarEtapa(){
-			MLT.encher(volumeTransferir);
 			executando = true;
 			concluida = false;
+			MLT.encher(volumeTransferir);
+
 		}
 
 		public boolean verificarConcluida(){
@@ -135,6 +138,10 @@ public class Etapas{
 		private Tanque HLT, MLT;
 		private float volumeTransferir;
 		private Valvula valvulaSuccao, valvulaDescarga;
+		private Bomba bomba;
+		private Vazao medidorVazao;
+		private float setVazao;
+
 		public void setTanques(Tanque HLT,Tanque MLT){
 			this.HLT = HLT;
 			this.MLT = MLT;
@@ -145,18 +152,40 @@ public class Etapas{
 			this.valvulaDescarga = valvulaDescarga;
 		}
 
+		public void setBomba(Bomba bomba){
+			this.bomba = bomba;
+		}
+
+		public void setMedidorVazao(Vazao medidorVazao){
+			this.medidorVazao = medidorVazao;
+		}
+
+		public void setSetVazao(float setVazao){
+			this.setVazao = setVazao;
+		}
 
 		public void executarEtapa(){
-
+			executando = true;
+			concluida = false;
 			valvulaSuccao.abrir();
 			valvulaDescarga.abrir();
 
 			//Aguardar succao abrir
 			while(valvulaSuccao.isClosed());
 
+			bomba.setMedidor(medidorVazao);
+			bomba.setVazao(setVazao);
+			bomba.ligar();
+			MLT.startRampaAquecimento();
 
 
 
+		}
+
+		public boolean verificarConcluida(){
+			executando =  !MLT.AquecimentoConcluido();
+			concluida = MLT.AquecimentoConcluido();
+			return concluida;
 		}
 
 	}

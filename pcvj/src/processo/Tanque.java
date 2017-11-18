@@ -124,7 +124,7 @@ public class Tanque {
 
 	public void drenar(){}
 
-	public void encher(Rectangle tq1,float volume){
+	public void encher(float volume){
 
 		try {
 			comunicacao.sendEncher(vazaoFill.getNsensor(), volume, valvulaEncher);
@@ -183,7 +183,6 @@ public class Tanque {
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
 			tempoDecorridoAquecimento++;
 			if (tempoDecorridoAquecimento > tempoAquecimento)
 			{
@@ -200,7 +199,7 @@ public class Tanque {
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
+
 			tempoDecorridoAquecimento++;
 			if (tempoDecorridoAquecimento >= tempoAquecimento)
 			{
@@ -221,7 +220,6 @@ public class Tanque {
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				//Nivel
 				float[] dados = comunicacao.getLevelTemperature(vazaoFill.getNsensor(), temperatura.getNsensor());
 				//level = comunicacao.getLevel(sensorVazaoEncher);

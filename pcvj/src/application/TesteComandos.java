@@ -186,7 +186,7 @@ public class TesteComandos {
 	@FXML
 	private void encherTq(){
 
-		tanque1.encher(tq1,11);
+		tanque1.encher(11);
 
 	}
 

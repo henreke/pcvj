@@ -113,6 +113,25 @@ public class Valvula {
 		}
 	}
 
+	public boolean isClosed(){
+
+		if (tipo == Valvulas.MOTORIZADA)
+			return status == Valvulas.FECHADA;
+		else if (tipo == Valvulas.SOLENOIDE)
+			return status == Valvulas.FECHANDO;
+
+		return false;
+	}
+
+	public boolean isOpen(){
+		if (tipo == Valvulas.MOTORIZADA)
+			return status == Valvulas.ABERTA;
+		else if (tipo == Valvulas.SOLENOIDE)
+			return status == Valvulas.ABRINDO;
+
+		return false;
+	}
+
 
 
 }

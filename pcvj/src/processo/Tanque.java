@@ -13,33 +13,35 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.shape.Rectangle;
+import processo.Temperaturas.Temperatura;
+import processo.Vazoes.Vazao;
 
 public class Tanque {
 
 	private int numero;
 	private float level;
-	private float temperatura;
+	private Temperatura temperatura;
+	private Vazao vazaoFill, vazaoDrain;
 	private int tempoAquecimento, tempoDecorridoAquecimento;
 	private Timer timer;
-	private int sensorVazaoEncher;
-	private int valvulaEncher;
-	private int sensorTemperatura;
+	private int valvulaEncher, valvulaSecar;
 
 	public PID pid = new PID(1,20,55,80,200);
 	private boolean Aquecendo = false;
 	private boolean AquecimentoConcluido = false;
 	private ArrayList<RampaAquecimento> rampa = new ArrayList<RampaAquecimento>();
 	private int rampaAtual = 0;
-	
+
 	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
 	Timer timerUpdate;
-	public Tanque(int sensorVazaoEncher,int sensorTemperatura, int valvulaEncher, int numeroTQ) {
-		this.sensorVazaoEncher = sensorVazaoEncher;
+	public Tanque(Vazao vazaoFill, Vazao vazaoDrain,Temperatura temperatura, int valvulaEncher, int valvulaSecar, int numeroTQ) {
+		this.vazaoFill = vazaoDrain;
 		this.valvulaEncher = valvulaEncher;
+		this.valvulaSecar = valvulaSecar;
 		this.numero = numeroTQ;
-		this.sensorTemperatura =  sensorTemperatura;
-		timerUpdate = new Timer();
-		timerUpdate.scheduleAtFixedRate(new relogioUpdate(), 2000, 5000);
+		this.temperatura =  temperatura;
+		//timerUpdate = new Timer();
+		//timerUpdate.scheduleAtFixedRate(new relogioUpdate(), 2000, 5000);
 	}
 
 	public void aquecer(int tempo, float temperatura){
@@ -125,16 +127,16 @@ public class Tanque {
 	public void encher(Rectangle tq1,float volume){
 
 		try {
-			comunicacao.sendEncher(sensorVazaoEncher, volume, valvulaEncher);
+			comunicacao.sendEncher(vazaoFill.getNsensor(), volume, valvulaEncher);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public float getLevel(){
-		return level;
+		return vazaoFill.getAcumulado()-vazaoDrain.getAcumulado();
 	}
 
 	public int getTempoDecorridoAquecimento(){
@@ -167,15 +169,15 @@ public class Tanque {
 	public boolean AquecimentoConcluido(){
 		return AquecimentoConcluido;
 	}
-	
-	
+
+
 	public float getTemperatura() {
 		//comunicacao.ge
-		return temperatura;
+		return temperatura.getTemperatura();
 	}
-	
-	
-	
+
+
+
 	class relogio extends TimerTask{
 
 
@@ -221,18 +223,18 @@ public class Tanque {
 			public void run() {
 				// TODO Auto-generated method stub
 				//Nivel
-				float[] dados = comunicacao.getLevelTemperature(sensorVazaoEncher, sensorTemperatura); 
+				float[] dados = comunicacao.getLevelTemperature(vazaoFill.getNsensor(), temperatura.getNsensor());
 				//level = comunicacao.getLevel(sensorVazaoEncher);
 				level = dados[0];
-				temperatura =  dados[1];
-				
-				
+				temperatura.setTemperatura(dados[1]);
+
+
 			}
 
 
 		}
 
-	
+
 
 	public class RampaAquecimento{
 		private final IntegerProperty tempo;

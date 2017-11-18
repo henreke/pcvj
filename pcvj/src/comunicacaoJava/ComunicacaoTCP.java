@@ -21,7 +21,7 @@ public class ComunicacaoTCP {
     OutputStream canal;
     private String ip;
     private int porta;
-    
+
     public static String ip_default = "192.168.25.177";
     public static int porta_default = 1188;
 
@@ -43,7 +43,7 @@ public class ComunicacaoTCP {
         try {
             //if (conexao == null){
                 conexao = new Socket(this.ip,this.porta);
-                
+
                // conexao.connect(conexao.getRemoteSocketAddress(), 3000);
           //  }
             return conexao.getOutputStream();
@@ -78,19 +78,19 @@ public class ComunicacaoTCP {
         canal = conectar();
         String resposta ="";
         if (canal != null) {
-        	
+
             String msg2 ="$"+msg+"$";
             canal.write(msg2.getBytes());
             InputStream aws = conexao.getInputStream();
             byte[] respostaB = new byte[50];
-            
+
             try {
     			Thread.sleep(20);
     		} catch (InterruptedException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
-            
+
             aws.read(respostaB);
             resposta = new String(respostaB,StandardCharsets.UTF_8);
 
@@ -122,14 +122,14 @@ public class ComunicacaoTCP {
     	String msgenvio = TipoMSG.UPDATE+"#"+msg;
     	return sendMessageUpdate(msgenvio);
     }
-    
+
     public void sendEncher(int Nsensor, float quantidade, int Nvalvula) throws IOException{
     	String msgenvio = TipoMSG.ENCHERTANQUE+"#"+quantidade+"#"+Nvalvula +"#"+Nsensor+"#";
     	sendMessage(msgenvio);
     }
-    
+
     public float getLevel(int Nsensor) {
-    		
+
     	String msg =TipoMSG.UPDATE+"#"+ TipoUpdate.LEVEL+"#"+Nsensor+"#";
     	try {
 			String retorno = sendMessageUpdate(msg);
@@ -148,9 +148,9 @@ public class ComunicacaoTCP {
 		}
     	return 0.0f;
     }
-    
+
     public float[] getLevelTemperature(int NsensorLevel, int NsensorTemperatura) {
-    	
+
     	String msg = TipoMSG.UPDATE+"#"+TipoUpdate.LEVEL_TEMPERATURE+"#"+NsensorLevel+"#"+NsensorTemperatura+"#";
     	float[] saida = new float[2];
     	try {
@@ -168,18 +168,18 @@ public class ComunicacaoTCP {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
+
     	return saida;
     }
-    
+
     public String getStatusValvulas(int[] valvulas) {
-    	
+
     	String msg = TipoMSG.UPDATE+"#"+TipoUpdate.VALVULAS+"#"+valvulas.length;
     	for (int i=0;i<valvulas.length;i++) {
     		msg+="#"+valvulas[i];
     	}
     	msg+="#";
-    	
+
     	try {
 			String retorno = sendMessageUpdate(msg);
 			System.out.println(retorno);
@@ -194,7 +194,7 @@ public class ComunicacaoTCP {
 		}
     	return "";
     }
-    
+
     public float[][] getFlows() {
     	String msg = TipoMSG.UPDATE+"#"+TipoUpdate.FLOW+"#";
     	try {
@@ -214,8 +214,29 @@ public class ComunicacaoTCP {
 			e.printStackTrace();
 			return null;
 		}
-    	
-    	
+
+
+    	return null;
+    }
+    public float[] getTemperaturas(){
+    	String msg = TipoMSG.UPDATE+"#"+TipoUpdate.TEMPERATURES+"#";
+    	try {
+			String retorno = sendMessageUpdate(msg);
+			if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
+
+				retorno = retorno.substring(2, retorno.length()-2);
+				String[] valores = retorno.split("#");
+				float[] valoresretorno = new float[valores.length];
+				for (int i=0; i< valoresretorno.length;i++)
+					valoresretorno[i] = Float.parseFloat(valores[i]);
+
+				return valoresretorno;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
     	return null;
     }
 }
@@ -223,7 +244,7 @@ class TipoMSG{
 
     public static final char VALVULA = 10;
     public static final char PID = 11;
-    public static final char BOMBA = 12;  
+    public static final char BOMBA = 12;
     public static final char ENCHERTANQUE = 14;
     public static final char UPDATE = 16;
 }
@@ -232,6 +253,7 @@ class TipoUpdate{
 	public static final char FLOW = 36;
 	public static final char LEVEL_TEMPERATURE = 38;
 	public static final char VALVULAS = 39;
+	public static final char TEMPERATURES = 40;
 }
 class Comandos{
 

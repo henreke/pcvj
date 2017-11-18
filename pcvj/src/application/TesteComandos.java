@@ -16,6 +16,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import processo.Tanque;
+import processo.Temperaturas;
 import processo.Valvulas;
 import processo.Vazoes;
 
@@ -29,13 +30,13 @@ public class TesteComandos {
 
 	@FXML
 	private TextField statusAquecimento;
-	
+
 	@FXML
 	private TextField volumeTQ1;
-	
+
 	@FXML
 	private TextField temperaturaTQ1;
-	
+
 	//Declaracao das valvulas
 	//0
 	@FXML
@@ -46,7 +47,7 @@ public class TesteComandos {
 	private Polygon corpoV02;
 	@FXML
 	private Line linhaV0;
-	
+
 	//1
 	@FXML
 	private Rectangle atuadorV1;
@@ -56,7 +57,7 @@ public class TesteComandos {
 	private Polygon corpoV12;
 	@FXML
 	private Line linhaV1;
-	
+
 	//2
 	@FXML
 	private Rectangle atuadorV2;
@@ -66,7 +67,7 @@ public class TesteComandos {
 	private Polygon corpoV22;
 	@FXML
 	private Line linhaV2;
-	
+
 	//0
 	@FXML
 	private Rectangle atuadorV3;
@@ -125,11 +126,11 @@ public class TesteComandos {
 	private Polygon corpoV82;
 	@FXML
 	private Line linhaV8;
-	
+
 	//Declarao Medidores Vazao
 	@FXML
 	private TextField medidorvazao1;
-	
+
 	@FXML
 	private TextField medidorvazao2;
 	@FXML
@@ -140,24 +141,30 @@ public class TesteComandos {
 	private MainApp mainApp;
 
 	public TesteComandos() {}
-	
-	
+
+
 
 	@FXML
 	private void initialize() {
 
-		tanque1 = new Tanque(1,1,0,1);
+
 		valvulas = new Valvulas();
 		adicionarValvulas();
 		vazoes = new Vazoes();
+		temperaturas = new Temperaturas(4);
+
+		tanque1 = new Tanque(vazoes.getVazao(0),vazoes.getVazao(1),temperaturas.getTemperatura(0),0,1,1);
+
 		timerUpdate = new Timer();
 		timerUpdate.scheduleAtFixedRate(new Relogio(), 2000, 1000);
-		
+
+
 	}
 
 	public Tanque tanque1;
 	public Valvulas valvulas;
 	public Vazoes vazoes;
+	public Temperaturas temperaturas;
 	Timer timer, timerUpdate;
 	int teste = 0;
 	public void setMainApp(MainApp mainApp) {
@@ -180,7 +187,7 @@ public class TesteComandos {
 	private void encherTq(){
 
 		tanque1.encher(tq1,11);
-		
+
 	}
 
 	@FXML
@@ -218,7 +225,7 @@ public class TesteComandos {
 			statusAquecimento.setText("Rampa de Aquecimento já foi executada");
 
 	}
-	
+
 	@FXML
 	private void testeStatusValvula()
 	{
@@ -226,9 +233,9 @@ public class TesteComandos {
 		if (valvulas.getStatusValvula(0) == Valvulas.ABRINDO)
 			System.out.println("abrindp");
 	}
-	
 
-	
+
+
 	private void adicionarValvulas() {
 		valvulas.addValvula(0, Valvulas.SOLENOIDE, atuadorV0, corpoV01, corpoV02, linhaV0);
 		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV1, corpoV11, corpoV12, linhaV1);
@@ -258,20 +265,21 @@ public class TesteComandos {
 
 
 	}
-	
+
 	class Relogio extends TimerTask{
 
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub			
+			// TODO Auto-generated method stub
 			valvulas.updateStatus();
 			vazoes.updateVazoes();
+			temperaturas.updateTemperaturas();
 			volumeTQ1.setText(String.valueOf(tanque1.getLevel()));
 			temperaturaTQ1.setText(String.valueOf(tanque1.getTemperatura()));
-			medidorvazao1.setText(String.valueOf(vazoes.getVazao(0))+"l/m");
-			medidorvazao2.setText(String.valueOf(vazoes.getVazao(1))+"l/m");
-			medidorvazao3.setText(String.valueOf(vazoes.getVazao(2))+"l/m");
+			medidorvazao1.setText(String.valueOf(vazoes.getVazao(0).getInstantaneo())+"l/m");
+			medidorvazao2.setText(String.valueOf(vazoes.getVazao(1).getInstantaneo())+"l/m");
+			medidorvazao3.setText(String.valueOf(vazoes.getVazao(2).getInstantaneo())+"l/m");
 			//medidorvazao4.setText(String.valueOf(vazoes.getVazao(3))+"l/m");
 			//System.out.println(String.valueOf(vazoes.getVazao(0))+"l/m");
 

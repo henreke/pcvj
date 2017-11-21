@@ -35,7 +35,8 @@ public class Tanque {
 	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
 	Timer timerUpdate;
 	public Tanque(Vazao vazaoFill, Vazao vazaoDrain,Temperatura temperatura, int valvulaEncher, int valvulaSecar, int numeroTQ) {
-		this.vazaoFill = vazaoDrain;
+		this.vazaoFill = vazaoFill;
+		this.vazaoDrain = vazaoDrain;
 		this.valvulaEncher = valvulaEncher;
 		this.valvulaSecar = valvulaSecar;
 		this.numero = numeroTQ;

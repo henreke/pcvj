@@ -15,7 +15,7 @@ public class MainApp extends Application {
 
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-
+	TesteComandos testecomandos;
 	@Override
 	public void start(Stage primaryStage) {
 
@@ -60,7 +60,7 @@ public class MainApp extends Application {
 
 			rootLayout.setCenter(testecomandosview);
 
-			TesteComandos testecomandos = loader.getController();
+			testecomandos = loader.getController();
 
 			testecomandos.setMainApp(this);
 		}
@@ -74,6 +74,7 @@ public class MainApp extends Application {
 		System.out.println("Finalizando");
 		//ExecutorService service = Executors.newCachedThreadPool();
 		//service.shutdownNow();
+		testecomandos.timerUpdate.cancel();
 	}
 
 

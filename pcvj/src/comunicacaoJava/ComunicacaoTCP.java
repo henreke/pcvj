@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 import processo.PID;
+import processo.Resistencias.Resistencia;
 
 /**
  * Created by henreke on 7/24/2017.
@@ -109,7 +110,26 @@ public class ComunicacaoTCP {
         String msg = TipoMSG.VALVULA+"#" + String.valueOf(nValvula)+"#" + String.valueOf(Comandos.FECHAR);
         sendMessage(msg);
     }
+    
+    public void ligarResistencia(char nResistencia) throws IOException {
+    	String msg =  TipoMSG.RESISTENCIA+"#"+nResistencia+"#"+Resistencia.LIGADA+"#";
+    	sendMessage(msg);
+    }
+    
+    public void desligarResistencia(char nResistencia) throws IOException {
+    	String msg =  TipoMSG.RESISTENCIA+"#"+nResistencia+"#"+Resistencia.DESLIGADA+"#";
+    	sendMessage(msg);
+    }
 
+    public void ligarBomba() throws IOException {
+    	String msg = TipoMSG.BOMBA+"#"+Comandos.LIGAR+"#";
+    	sendMessage(msg);
+    }
+
+    public void desligarBomba() throws IOException {
+    	String msg = TipoMSG.BOMBA +"#"+Comandos.DESLIGAR+"#";
+    	sendMessage(msg);
+    }
     public void sendPID(PID pid) throws IOException {
         String msg = TipoMSG.PID+"#"+String.valueOf(pid.setPoint) +"#"
                 +String.valueOf(pid.nPID)+"#"+String.valueOf(pid.P)
@@ -239,6 +259,53 @@ public class ComunicacaoTCP {
 		}
     	return null;
     }
+    
+    public int[] getResistencias() {
+    	String msg = TipoMSG.UPDATE+"#"+TipoUpdate.UPDATE_STATUS_RESISTENCIAS+"#";
+    	
+    	try {
+			String retorno = sendMessageUpdate(msg);
+			if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
+				retorno = retorno.substring(2, retorno.length()-2);
+				String[] valores = retorno.split("#");
+				int[] valoresretorno = new int[valores.length];
+				for (int i=0; i< valoresretorno.length;i++)
+					valoresretorno[i] = Integer.parseInt(valores[i]);
+
+				return valoresretorno;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    	
+    	return null;
+    }
+    public int[] getStatusBomba() {
+    	String msg = TipoMSG.UPDATE+"#"+TipoUpdate.UPDATE_STATUS_BOMBA+"#";
+    	
+    	try {
+			String retorno = sendMessageUpdate(msg);
+			if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
+				retorno = retorno.substring(2, retorno.length()-2);
+				String[] valores = retorno.split("#");
+				int[] valoresretorno = new int[valores.length];
+				for (int i=0; i< valoresretorno.length;i++)
+					valoresretorno[i] = Integer.parseInt(valores[i]);
+
+				return valoresretorno;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    	return null;
+    }
+    
+    
+   
 }
 class TipoMSG{
 
@@ -247,6 +314,7 @@ class TipoMSG{
     public static final char BOMBA = 12;
     public static final char ENCHERTANQUE = 14;
     public static final char UPDATE = 16;
+    public static final char RESISTENCIA = 17;
 }
 class TipoUpdate{
 	public static final char LEVEL = 33;
@@ -254,11 +322,15 @@ class TipoUpdate{
 	public static final char LEVEL_TEMPERATURE = 38;
 	public static final char VALVULAS = 39;
 	public static final char TEMPERATURES = 40;
+	public static final char UPDATE_STATUS_BOMBA = 41;
+	public static final char UPDATE_STATUS_RESISTENCIAS = 42;
 }
 class Comandos{
 
     public static final char ABRIR = 'A';
     public static final char FECHAR = 'F';
+    public static final char LIGAR = 'L';
+    public static final char DESLIGAR = 'D';
 
 }
 

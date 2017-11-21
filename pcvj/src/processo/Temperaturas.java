@@ -12,7 +12,7 @@ public class Temperaturas{
 
 	public Temperaturas(int Nsensores){
 
-		for (int i=0;i>Nsensores;i++)
+		for (int i=0;i<Nsensores;i++)
 			temperaturas.add(new Temperatura(i));
 	}
 	public Temperatura getTemperatura(int i){

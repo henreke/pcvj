@@ -11,10 +11,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import processo.Bomba;
+import processo.Resistencias;
+import processo.Resistencias.Resistencia;
 import processo.Tanque;
 import processo.Temperaturas;
 import processo.Valvulas;
@@ -126,6 +130,22 @@ public class TesteComandos {
 	private Polygon corpoV82;
 	@FXML
 	private Line linhaV8;
+	
+	
+	//Resistencias
+	@FXML
+	private Line resistencia1;
+	@FXML
+	private Line resistencia2;
+	@FXML
+	private Line resistencia3;
+	
+	@FXML
+	private TextField valorresistencia1;
+	@FXML
+	private TextField valorresistencia2;
+	@FXML
+	private TextField valorresistencia3;
 
 	//Declarao Medidores Vazao
 	@FXML
@@ -137,6 +157,12 @@ public class TesteComandos {
 	private TextField medidorvazao3;
 	@FXML
 	private TextField medidorvazao4;
+	
+	//Bomba
+	@FXML
+	private Circle bombaCirculoExterno;
+	@FXML
+	private Circle bombaCirculoInterno;
 
 	private MainApp mainApp;
 
@@ -152,7 +178,8 @@ public class TesteComandos {
 		adicionarValvulas();
 		vazoes = new Vazoes();
 		temperaturas = new Temperaturas(4);
-
+		resistencias = new Resistencias(3);
+		bomba = new Bomba();
 		tanque1 = new Tanque(vazoes.getVazao(0),vazoes.getVazao(1),temperaturas.getTemperatura(0),0,1,1);
 
 		timerUpdate = new Timer();
@@ -165,7 +192,10 @@ public class TesteComandos {
 	public Valvulas valvulas;
 	public Vazoes vazoes;
 	public Temperaturas temperaturas;
-	Timer timer, timerUpdate;
+	public Resistencias resistencias;
+	public Bomba bomba;
+	Timer timer;
+	public Timer timerUpdate;
 	int teste = 0;
 	public void setMainApp(MainApp mainApp) {
 
@@ -235,17 +265,48 @@ public class TesteComandos {
 	}
 
 
+	@FXML
+	private void ligarResistencia1() {
+		if (resistencias.getResistencia(0).getStatus() == Resistencia.LIGADA)
+			resistencias.getResistencia(0).desligar();
+		else
+			resistencias.getResistencia(0).ligar();
+	}
+	
+	@FXML
+	private void ligarResistencia2() {
+		if (resistencias.getResistencia(1).getStatus() == Resistencia.LIGADA)
+			resistencias.getResistencia(1).desligar();
+		else
+			resistencias.getResistencia(1).ligar();
+	}
+	
+	@FXML
+	private void ligarResistencia3() {
+		if (resistencias.getResistencia(2).getStatus() == Resistencia.LIGADA)
+			resistencias.getResistencia(2).desligar();
+		else
+			resistencias.getResistencia(2).ligar();
+	}
+	@FXML
+	private void ligarBomba() {
+		if (bomba.getStatus() == Resistencia.LIGADA)
+			bomba.desligar();
+		else
+			bomba.ligar();
+	}
+	
 
 	private void adicionarValvulas() {
 		valvulas.addValvula(0, Valvulas.SOLENOIDE, atuadorV0, corpoV01, corpoV02, linhaV0);
-		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV1, corpoV11, corpoV12, linhaV1);
-		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV2, corpoV21, corpoV22, linhaV2);
-		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV3, corpoV31, corpoV32, linhaV3);
-		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV4, corpoV41, corpoV42, linhaV4);
-		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV5, corpoV51, corpoV52, linhaV5);
-		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV6, corpoV61, corpoV62, linhaV6);
-		valvulas.addValvula(0, Valvulas.MOTORIZADA, atuadorV7, corpoV71, corpoV72, linhaV7);
-		valvulas.addValvula(0, Valvulas.SOLENOIDE, atuadorV8, corpoV81, corpoV82, linhaV8);
+		valvulas.addValvula(1, Valvulas.MOTORIZADA, atuadorV1, corpoV11, corpoV12, linhaV1);
+		valvulas.addValvula(2, Valvulas.MOTORIZADA, atuadorV2, corpoV21, corpoV22, linhaV2);
+		valvulas.addValvula(3, Valvulas.MOTORIZADA, atuadorV3, corpoV31, corpoV32, linhaV3);
+		valvulas.addValvula(4, Valvulas.MOTORIZADA, atuadorV4, corpoV41, corpoV42, linhaV4);
+		valvulas.addValvula(5, Valvulas.MOTORIZADA, atuadorV5, corpoV51, corpoV52, linhaV5);
+		valvulas.addValvula(6, Valvulas.MOTORIZADA, atuadorV6, corpoV61, corpoV62, linhaV6);
+		valvulas.addValvula(7, Valvulas.MOTORIZADA, atuadorV7, corpoV71, corpoV72, linhaV7);
+		valvulas.addValvula(8, Valvulas.SOLENOIDE, atuadorV8, corpoV81, corpoV82, linhaV8);
 	}
 	class RelogioRampa2 extends TimerTask{
 
@@ -275,11 +336,21 @@ public class TesteComandos {
 			valvulas.updateStatus();
 			vazoes.updateVazoes();
 			temperaturas.updateTemperaturas();
+			resistencias.updateResistencias();
+			bomba.updateStatus();
 			volumeTQ1.setText(String.valueOf(tanque1.getLevel()));
 			temperaturaTQ1.setText(String.valueOf(tanque1.getTemperatura()));
 			medidorvazao1.setText(String.valueOf(vazoes.getVazao(0).getInstantaneo())+"l/m");
 			medidorvazao2.setText(String.valueOf(vazoes.getVazao(1).getInstantaneo())+"l/m");
 			medidorvazao3.setText(String.valueOf(vazoes.getVazao(2).getInstantaneo())+"l/m");
+			
+			resistencia1.setStroke(resistencias.getResistencia(0).getColorStatus());
+			resistencia2.setStroke(resistencias.getResistencia(1).getColorStatus());
+			resistencia3.setStroke(resistencias.getResistencia(2).getColorStatus());
+			
+			valorresistencia1.setText(String.valueOf((resistencias.getResistencia(0).getPotencia()/255)*100));
+			
+			bombaCirculoInterno.setFill(bomba.getColorStatus());
 			//medidorvazao4.setText(String.valueOf(vazoes.getVazao(3))+"l/m");
 			//System.out.println(String.valueOf(vazoes.getVazao(0))+"l/m");
 

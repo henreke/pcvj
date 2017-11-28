@@ -13,6 +13,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.shape.Rectangle;
+import processo.Resistencias.Resistencia;
 import processo.Temperaturas.Temperatura;
 import processo.Vazoes.Vazao;
 
@@ -25,12 +26,13 @@ public class Tanque {
 	private int tempoAquecimento, tempoDecorridoAquecimento;
 	private Timer timer;
 	private int valvulaEncher, valvulaSecar;
-
+	private Resistencia resistencia;
 	public PID pid = new PID(1,20,55,80,200);
 	private boolean Aquecendo = false;
 	private boolean AquecimentoConcluido = false;
 	private ArrayList<RampaAquecimento> rampa = new ArrayList<RampaAquecimento>();
 	private int rampaAtual = 0;
+	public int CapacidadeTanque = 50;
 
 	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
 	Timer timerUpdate;
@@ -46,6 +48,7 @@ public class Tanque {
 	}
 
 	public void aquecer(int tempo, float temperatura){
+		resistencia.ligar();
 		tempoDecorridoAquecimento = 0;
 		tempoAquecimento = tempo;
 		timer = new Timer();
@@ -61,13 +64,20 @@ public class Tanque {
 
 	}
 
-
+	public void setCapacidade(int capacidade) {
+		this.CapacidadeTanque = capacidade;
+	}
+	public double calcLevelGraphics() {
+		double saida = (getLevel() / (CapacidadeTanque*1.00));
+		return saida;
+	}
 	private void alternarStatusAquecimento(boolean status){
 		Aquecendo = status;
 		AquecimentoConcluido = !status;
 	}
 	public void aquecer(RampaAquecimento rampaquecer){
 
+		resistencia.ligar();
 		tempoDecorridoAquecimento = 0;
 		tempoAquecimento = rampaquecer.getTempo();
 		pid.setSetPoint(rampaquecer.getTemperatura());
@@ -86,6 +96,7 @@ public class Tanque {
 	public void pararAquecer(){
 
 		alternarStatusAquecimento(false);
+		resistencia.desligar();
 	}
 
 	public int addRampaAquecimento(int tempo, float temperatura){

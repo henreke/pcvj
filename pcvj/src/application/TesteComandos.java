@@ -29,8 +29,7 @@ public class TesteComandos {
 	@FXML
 	private TextField temp1;
 
-	@FXML
-	private Rectangle tq1;
+	
 
 	@FXML
 	private TextField statusAquecimento;
@@ -163,6 +162,12 @@ public class TesteComandos {
 	private Circle bombaCirculoExterno;
 	@FXML
 	private Circle bombaCirculoInterno;
+	
+	//Tanques
+	@FXML
+	private Rectangle tq1_externo;
+	@FXML
+	private Rectangle tq1_interno;
 
 	private MainApp mainApp;
 
@@ -295,7 +300,10 @@ public class TesteComandos {
 		else
 			bomba.ligar();
 	}
-	
+	@FXML
+	private void resetMedidor() {
+		vazoes.getVazao(0).resetAcumulado();
+	}
 
 	private void adicionarValvulas() {
 		valvulas.addValvula(0, Valvulas.SOLENOIDE, atuadorV0, corpoV01, corpoV02, linhaV0);
@@ -307,6 +315,13 @@ public class TesteComandos {
 		valvulas.addValvula(6, Valvulas.MOTORIZADA, atuadorV6, corpoV61, corpoV62, linhaV6);
 		valvulas.addValvula(7, Valvulas.MOTORIZADA, atuadorV7, corpoV71, corpoV72, linhaV7);
 		valvulas.addValvula(8, Valvulas.SOLENOIDE, atuadorV8, corpoV81, corpoV82, linhaV8);
+	}
+	private void calcAlturaTanques(Rectangle externo, Rectangle interno, Tanque tanque) {
+		interno.setHeight((externo.getHeight()/tanque.CapacidadeTanque)*tanque.getLevel());
+		
+		if (interno.getHeight() > (externo.getHeight()-2))
+			interno.setHeight(externo.getHeight() - 2);
+		interno.setLayoutY(externo.getLayoutY()+externo.getHeight()-2-interno.getHeight());
 	}
 	class RelogioRampa2 extends TimerTask{
 
@@ -351,6 +366,7 @@ public class TesteComandos {
 			valorresistencia1.setText(String.valueOf((resistencias.getResistencia(0).getPotencia()/255)*100));
 			
 			bombaCirculoInterno.setFill(bomba.getColorStatus());
+			calcAlturaTanques(tq1_externo, tq1_interno, tanque1);
 			//medidorvazao4.setText(String.valueOf(vazoes.getVazao(3))+"l/m");
 			//System.out.println(String.valueOf(vazoes.getVazao(0))+"l/m");
 

@@ -1,5 +1,6 @@
 package processo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -69,6 +70,15 @@ public class Vazoes {
 		public void setInstAcumulado(float instantaneo, float acumulado) {
 			this.instantaneo = instantaneo;
 			this.acumulado = acumulado;
+		}
+		
+		public void resetAcumulado() {
+			try {
+				comunicacao.resetAcumulado(Nsensor);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

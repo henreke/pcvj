@@ -22,11 +22,11 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="20.0" layoutX="590.0" layoutY="334.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" width="154.0" />
       <Label layoutX="228.0" layoutY="433.0" text="Temperatura 1:" />
       <TextField id="temp1" fx:id="temp1" layoutX="246.0" layoutY="456.0" prefHeight="25.0" prefWidth="80.0" />
-      <Button layoutX="286.0" layoutY="484.0" mnemonicParsing="false" onAction="#enviarPergunta" text="Send" />
+      <Button layoutX="286.0" layoutY="484.0" mnemonicParsing="false" onAction="#resetMedidor" text="TesteReset" />
       <Group id="GTanque1" layoutX="46.0" layoutY="-12.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fffb0" height="144.0" layoutX="71.0" layoutY="89.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="118.0" />
-            <Rectangle fx:id="tq1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" layoutX="73.0" layoutY="159.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="114.0" />
+            <Rectangle fx:id="tq1_externo" arcHeight="5.0" arcWidth="5.0" fill="#1fffb0" height="144.0" layoutX="71.0" layoutY="89.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="118.0" />
+            <Rectangle fx:id="tq1_interno" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="138.0" layoutX="73.0" layoutY="92.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="114.0" />
             <Label layoutX="120.0" layoutY="186.0" text="HLT" />
             <Line fx:id="resistencia1" endX="100.0" layoutX="40.0" layoutY="222.0" startX="34.0" stroke="#2516d3" strokeWidth="4.0" />
          </children>

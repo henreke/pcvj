@@ -147,6 +147,11 @@ public class ComunicacaoTCP {
     	String msgenvio = TipoMSG.ENCHERTANQUE+"#"+quantidade+"#"+Nvalvula +"#"+Nsensor+"#";
     	sendMessage(msgenvio);
     }
+    
+    public void resetAcumulado(int Nsensor) throws IOException {
+    	String msg = TipoMSG.RESET_ACUMULADO+"#"+Nsensor+"#";
+    	sendMessage(msg);
+    }
 
     public float getLevel(int Nsensor) {
 
@@ -315,6 +320,7 @@ class TipoMSG{
     public static final char ENCHERTANQUE = 14;
     public static final char UPDATE = 16;
     public static final char RESISTENCIA = 17;
+    public static final char RESET_ACUMULADO = 18;
 }
 class TipoUpdate{
 	public static final char LEVEL = 33;

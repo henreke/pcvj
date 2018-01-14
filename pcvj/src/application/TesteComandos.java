@@ -39,6 +39,12 @@ public class TesteComandos {
 
 	@FXML
 	private TextField temperaturaTQ1;
+	
+	@FXML
+	private TextField temperaturaTQ2;
+	
+	@FXML
+	private TextField temperaturaTQ3;
 
 	//Declaracao das valvulas
 	//0
@@ -355,6 +361,8 @@ public class TesteComandos {
 			bomba.updateStatus();
 			volumeTQ1.setText(String.valueOf(tanque1.getLevel()));
 			temperaturaTQ1.setText(String.valueOf(tanque1.getTemperatura()));
+			temperaturaTQ2.setText(String.valueOf(temperaturas.getTemperatura(1).getTemperatura()));
+			temperaturaTQ3.setText(String.valueOf(temperaturas.getTemperatura(2).getTemperatura()));
 			medidorvazao1.setText(String.valueOf(vazoes.getVazao(0).getInstantaneo())+"l/m");
 			medidorvazao2.setText(String.valueOf(vazoes.getVazao(1).getInstantaneo())+"l/m");
 			medidorvazao3.setText(String.valueOf(vazoes.getVazao(2).getInstantaneo())+"l/m");

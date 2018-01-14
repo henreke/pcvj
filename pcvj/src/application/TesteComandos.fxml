@@ -382,5 +382,7 @@
       <Button layoutX="261.0" layoutY="347.0" mnemonicParsing="false" onAction="#ligarResistencia2" text="Ligar" />
       <Button layoutX="1052.0" layoutY="342.0" mnemonicParsing="false" onAction="#ligarResistencia3" text="Ligar" />
       <Button layoutX="547.0" layoutY="297.0" mnemonicParsing="false" onAction="#ligarBomba" text="Ligar" />
+      <TextField fx:id="temperaturaTQ2" layoutX="480.0" layoutY="235.0" prefHeight="25.0" prefWidth="89.0" />
+      <TextField fx:id="temperaturaTQ3" layoutX="1016.0" layoutY="232.0" prefHeight="25.0" prefWidth="68.0" />
    </children>
 </AnchorPane>

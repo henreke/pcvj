@@ -355,6 +355,7 @@ public class TesteComandos {
 		public void run() {
 			// TODO Auto-generated method stub
 			valvulas.updateStatus();
+			
 			vazoes.updateVazoes();
 			temperaturas.updateTemperaturas();
 			resistencias.updateResistencias();

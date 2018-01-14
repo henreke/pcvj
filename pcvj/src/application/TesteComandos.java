@@ -22,6 +22,7 @@ import processo.Resistencias.Resistencia;
 import processo.Tanque;
 import processo.Temperaturas;
 import processo.Valvulas;
+import processo.Valvulas.Valvula;
 import processo.Vazoes;
 
 public class TesteComandos {
@@ -29,7 +30,7 @@ public class TesteComandos {
 	@FXML
 	private TextField temp1;
 
-	
+
 
 	@FXML
 	private TextField statusAquecimento;
@@ -39,10 +40,10 @@ public class TesteComandos {
 
 	@FXML
 	private TextField temperaturaTQ1;
-	
+
 	@FXML
 	private TextField temperaturaTQ2;
-	
+
 	@FXML
 	private TextField temperaturaTQ3;
 
@@ -135,8 +136,8 @@ public class TesteComandos {
 	private Polygon corpoV82;
 	@FXML
 	private Line linhaV8;
-	
-	
+
+
 	//Resistencias
 	@FXML
 	private Line resistencia1;
@@ -144,7 +145,7 @@ public class TesteComandos {
 	private Line resistencia2;
 	@FXML
 	private Line resistencia3;
-	
+
 	@FXML
 	private TextField valorresistencia1;
 	@FXML
@@ -162,13 +163,13 @@ public class TesteComandos {
 	private TextField medidorvazao3;
 	@FXML
 	private TextField medidorvazao4;
-	
+
 	//Bomba
 	@FXML
 	private Circle bombaCirculoExterno;
 	@FXML
 	private Circle bombaCirculoInterno;
-	
+
 	//Tanques
 	@FXML
 	private Rectangle tq1_externo;
@@ -199,7 +200,7 @@ public class TesteComandos {
 
 	}
 
-	public Tanque tanque1;
+	public Tanque tanque1,tanque2,tanque3;
 	public Valvulas valvulas;
 	public Vazoes vazoes;
 	public Temperaturas temperaturas;
@@ -283,7 +284,7 @@ public class TesteComandos {
 		else
 			resistencias.getResistencia(0).ligar();
 	}
-	
+
 	@FXML
 	private void ligarResistencia2() {
 		if (resistencias.getResistencia(1).getStatus() == Resistencia.LIGADA)
@@ -291,7 +292,7 @@ public class TesteComandos {
 		else
 			resistencias.getResistencia(1).ligar();
 	}
-	
+
 	@FXML
 	private void ligarResistencia3() {
 		if (resistencias.getResistencia(2).getStatus() == Resistencia.LIGADA)
@@ -306,9 +307,79 @@ public class TesteComandos {
 		else
 			bomba.ligar();
 	}
+
+	private void manipularValvula(Valvula valvula){
+		//System.out.println("Manipulando");
+		if (valvula.isOpen())
+			valvula.fechar();
+		else
+			valvula.abrir();
+	}
 	@FXML
 	private void resetMedidor() {
 		vazoes.getVazao(0).resetAcumulado();
+	}
+
+	@FXML
+	private void abrirValvula0()
+	{
+		 manipularValvula(valvulas.getValvula(0));
+	}
+
+	@FXML
+	private void abrirValvula1()
+	{
+		manipularValvula(valvulas.getValvula(1));
+
+	}
+
+	@FXML
+	private void abrirValvula2()
+	{
+		manipularValvula(valvulas.getValvula(2));
+
+	}
+
+	@FXML
+	private void abrirValvula3()
+	{
+		manipularValvula(valvulas.getValvula(3));
+
+	}
+
+	@FXML
+	private void abrirValvula4()
+	{
+		manipularValvula(valvulas.getValvula(4));
+
+	}
+
+	@FXML
+	private void abrirValvula5()
+	{
+		manipularValvula(valvulas.getValvula(5));
+
+	}
+
+	@FXML
+	private void abrirValvula6()
+	{
+		manipularValvula(valvulas.getValvula(6));
+
+	}
+
+	@FXML
+	private void abrirValvula7()
+	{
+		manipularValvula(valvulas.getValvula(7));
+
+	}
+
+	@FXML
+	private void abrirValvula8()
+	{
+		manipularValvula(valvulas.getValvula(8));
+
 	}
 
 	private void adicionarValvulas() {
@@ -324,7 +395,7 @@ public class TesteComandos {
 	}
 	private void calcAlturaTanques(Rectangle externo, Rectangle interno, Tanque tanque) {
 		interno.setHeight((externo.getHeight()/tanque.CapacidadeTanque)*tanque.getLevel());
-		
+
 		if (interno.getHeight() > (externo.getHeight()-2))
 			interno.setHeight(externo.getHeight() - 2);
 		interno.setLayoutY(externo.getLayoutY()+externo.getHeight()-2-interno.getHeight());
@@ -355,7 +426,7 @@ public class TesteComandos {
 		public void run() {
 			// TODO Auto-generated method stub
 			valvulas.updateStatus();
-			
+
 			vazoes.updateVazoes();
 			temperaturas.updateTemperaturas();
 			resistencias.updateResistencias();
@@ -367,13 +438,13 @@ public class TesteComandos {
 			medidorvazao1.setText(String.valueOf(vazoes.getVazao(0).getInstantaneo())+"l/m");
 			medidorvazao2.setText(String.valueOf(vazoes.getVazao(1).getInstantaneo())+"l/m");
 			medidorvazao3.setText(String.valueOf(vazoes.getVazao(2).getInstantaneo())+"l/m");
-			
+
 			resistencia1.setStroke(resistencias.getResistencia(0).getColorStatus());
 			resistencia2.setStroke(resistencias.getResistencia(1).getColorStatus());
 			resistencia3.setStroke(resistencias.getResistencia(2).getColorStatus());
-			
+
 			valorresistencia1.setText(String.valueOf((resistencias.getResistencia(0).getPotencia()/255)*100));
-			
+
 			bombaCirculoInterno.setFill(bomba.getColorStatus());
 			calcAlturaTanques(tq1_externo, tq1_interno, tanque1);
 			//medidorvazao4.setText(String.valueOf(vazoes.getVazao(3))+"l/m");

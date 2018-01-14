@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
+<?import java.lang.Double?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TesteComandos">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TesteComandos">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="20.0" layoutX="861.0" layoutY="224.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" width="34.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="20.0" layoutX="869.0" layoutY="456.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" width="26.0" />
@@ -50,7 +47,7 @@
             <Line fx:id="resistencia3" endX="100.0" layoutX="566.0" layoutY="391.0" startX="34.0" stroke="#2516d3" strokeWidth="4.0" />
          </children>
       </Group>
-      <Group id="GValvula1" layoutX="152.0" layoutY="-109.0">
+      <Group id="GValvula1" layoutX="152.0" layoutY="-109.0" onContextMenuRequested="#abrirValvula1">
          <children>
             <Line fx:id="linhaV1" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV12" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -76,7 +73,7 @@
             </Polygon>
          </children>
       </Group>
-      <Group id="GValvula2" layoutX="382.0" layoutY="15.0">
+      <Group id="GValvula2" layoutX="382.0" layoutY="15.0" onContextMenuRequested="#abrirValvula2">
          <children>
             <Line fx:id="linhaV2" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV22" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -102,7 +99,7 @@
             </Polygon>
          </children>
       </Group>
-      <Group id="GSolenoide1" layoutX="-88.0" layoutY="-258.0">
+      <Group id="GSolenoide1" layoutX="-88.0" layoutY="-258.0" onContextMenuRequested="#abrirValvula0">
          <children>
             <Line fx:id="linhaV0" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV02" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -133,7 +130,7 @@
       <Label layoutX="236.0" layoutY="112.0" text="Temperatura:" />
       <TextField fx:id="temperaturaTQ1" layoutX="309.0" layoutY="108.0" prefHeight="25.0" prefWidth="56.0" />
       <Button layoutX="560.0" layoutY="40.0" mnemonicParsing="false" onAction="#testeStatusValvula" text="Valvulas" />
-      <Button layoutX="663.0" layoutY="40.0" mnemonicParsing="false" text="VAzoes" />
+      <Button layoutX="663.0" layoutY="40.0" mnemonicParsing="false" onAction="#abrirValvula0" text="VAzoes" />
       <Group id="Bomba" layoutX="14.0" layoutY="-75.0">
          <children>
             <Polygon fill="DODGERBLUE" layoutX="560.0" layoutY="460.0" scaleX="0.4" scaleY="0.4" stroke="BLACK" strokeType="INSIDE">
@@ -161,7 +158,7 @@
             </TextField>
          </children>
       </Group>
-      <Group id="GValvula3" layoutX="394.0" layoutY="-145.0">
+      <Group id="GValvula3" layoutX="394.0" layoutY="-145.0" onContextMenuRequested="#abrirValvula7">
          <children>
             <Line fx:id="linhaV3" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV32" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -187,7 +184,7 @@
             </Polygon>
          </children>
       </Group>
-      <Group id="GValvula4" layoutX="712.0" layoutY="-66.0">
+      <Group id="GValvula4" layoutX="712.0" layoutY="-66.0" onContextMenuRequested="#abrirValvula5">
          <children>
             <Line fx:id="linhaV6" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV62" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -213,7 +210,7 @@
             </Polygon>
          </children>
       </Group>
-      <Group id="GValvula5" layoutX="645.0">
+      <Group id="GValvula5" layoutX="645.0" onContextMenuRequested="#abrirValvula3">
          <children>
             <Line fx:id="linhaV4" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV42" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -239,7 +236,7 @@
             </Polygon>
          </children>
       </Group>
-      <Group id="GValvula6" layoutX="718.0">
+      <Group id="GValvula6" layoutX="718.0" onContextMenuRequested="#abrirValvula4">
          <children>
             <Line fx:id="linhaV5" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV52" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -265,7 +262,7 @@
             </Polygon>
          </children>
       </Group>
-      <Group id="GValvula7" layoutX="825.0" layoutY="81.0">
+      <Group id="GValvula7" layoutX="825.0" layoutY="81.0" onContextMenuRequested="#abrirValvula6">
          <children>
             <Line fx:id="linhaV7" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV72" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -348,7 +345,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="20.0" layoutX="521.0" layoutY="349.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" width="56.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="20.0" layoutX="523.0" layoutY="358.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="17.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="17.0" layoutX="185.0" layoutY="226.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="17.0" />
-      <Group id="GValvula8" layoutX="891.0" layoutY="122.0">
+      <Group id="GValvula8" layoutX="891.0" layoutY="122.0" onContextMenuRequested="#abrirValvula8">
          <children>
             <Line fx:id="linhaV8" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV82" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -381,8 +378,10 @@
       <Button layoutX="21.0" layoutY="196.0" mnemonicParsing="false" onAction="#ligarResistencia1" text="Ligar" />
       <Button layoutX="261.0" layoutY="347.0" mnemonicParsing="false" onAction="#ligarResistencia2" text="Ligar" />
       <Button layoutX="1052.0" layoutY="342.0" mnemonicParsing="false" onAction="#ligarResistencia3" text="Ligar" />
-      <Button layoutX="547.0" layoutY="297.0" mnemonicParsing="false" onAction="#ligarBomba" text="Ligar" />
-      <TextField fx:id="temperaturaTQ2" layoutX="480.0" layoutY="235.0" prefHeight="25.0" prefWidth="89.0" />
-      <TextField fx:id="temperaturaTQ3" layoutX="1016.0" layoutY="232.0" prefHeight="25.0" prefWidth="68.0" />
+      <Button layoutX="605.0" layoutY="372.0" mnemonicParsing="false" onAction="#ligarBomba" text="Ligar" />
+      <TextField fx:id="temperaturaTQ2" layoutX="544.0" layoutY="265.0" prefHeight="25.0" prefWidth="47.0" />
+      <TextField fx:id="temperaturaTQ3" layoutX="1016.0" layoutY="276.0" prefHeight="25.0" prefWidth="68.0" />
+      <Label layoutX="471.0" layoutY="268.0" text="Temperatura:" />
+      <Label layoutX="1016.0" layoutY="257.0" text="Temperatura:" />
    </children>
 </AnchorPane>

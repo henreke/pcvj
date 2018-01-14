@@ -76,7 +76,7 @@ public class Valvula {
 	public int getNumero() {
 		return numero;
 	}
-	void abrir() {
+	public void abrir() {
 		atuador.setFill(Color.GREEN);
 		linha.setFill(Color.GREEN);
 		try {
@@ -87,7 +87,7 @@ public class Valvula {
 		}
 	}
 
-	void fechar() {
+	public void fechar() {
 		atuador.setFill(Color.RED);
 		linha.setFill(Color.RED);
 		try {

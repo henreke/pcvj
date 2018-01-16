@@ -177,6 +177,16 @@ public class TesteComandos {
 	private Rectangle tq1_externo;
 	@FXML
 	private Rectangle tq1_interno;
+	
+	@FXML
+	private Rectangle tq2_externo;
+	@FXML
+	private Rectangle tq2_interno;
+	
+	@FXML
+	private Rectangle tq3_externo;
+	@FXML
+	private Rectangle tq3_interno;
 
 	private MainApp mainApp;
 
@@ -194,8 +204,9 @@ public class TesteComandos {
 		temperaturas = new Temperaturas(4);
 		resistencias = new Resistencias(3);
 		bomba = new Bomba();
-		tanque1 = new Tanque(vazoes.getVazao(0),vazoes.getVazao(1),temperaturas.getTemperatura(0),0,1,1);
-
+		HLT = new Tanque(vazoes.getVazao(0),vazoes.getVazao(1),temperaturas.getTemperatura(0),0,1,1);
+		MLT = new Tanque(vazoes.getVazao(1),vazoes.getVazao(2),temperaturas.getTemperatura(1),1,2,2);
+		BK = new Tanque(vazoes.getVazao(1),vazoes.getVazao(2),temperaturas.getTemperatura(2),5,6,3);
 		timerUpdate = new Timer();
 		timerUpdate.scheduleAtFixedRate(new Relogio(), 2000, 1000);
 
@@ -204,7 +215,7 @@ public class TesteComandos {
 
 	}
 
-	public Tanque tanque1,tanque2,tanque3;
+	public Tanque HLT,MLT,BK;
 	public Valvulas valvulas;
 	public Vazoes vazoes;
 	public Temperaturas temperaturas;
@@ -233,7 +244,7 @@ public class TesteComandos {
 	@FXML
 	private void encherTq(){
 
-		tanque1.encher(11);
+		HLT.encher(11);
 
 	}
 
@@ -263,7 +274,7 @@ public class TesteComandos {
 
 	@FXML
 	private void startAquecimentoTQ1(){
-		if (tanque1.startRampaAquecimento()) {
+		if (HLT.startRampaAquecimento()) {
 
 			timer = new Timer();
 			timer.scheduleAtFixedRate(new RelogioRampa2(), 0, 500);
@@ -389,11 +400,24 @@ public class TesteComandos {
 
 	@FXML
 	private void inciarEtapa1(){
-
-		etapas.iniciaEtapa1();
+		etapas.iniciaEtapa1(HLT,20);
 
 	}
 
+	@FXML
+	private void iniciarEtapa2() {
+		etapas.iniciaEtapa2(HLT, 60);
+	}
+	
+	@FXML
+	private void iniciarEtapa3() {
+		etapas.iniciaEtapa3(HLT, MLT, 60);
+	}
+	
+	@FXML
+	private void iniciarEtapa4() {
+		etapas.iniciaEtapa4(HLT, MLT, 20, valvulas.getValvula(1), valvulas.getValvula(2), bomba, vazoes.getVazao(2), 2);
+	}
 	private void adicionarValvulas() {
 		valvulas.addValvula(0, Valvulas.SOLENOIDE, atuadorV0, corpoV01, corpoV02, linhaV0);
 		valvulas.addValvula(1, Valvulas.MOTORIZADA, atuadorV1, corpoV11, corpoV12, linhaV1);
@@ -419,8 +443,8 @@ public class TesteComandos {
 		public void run() {
 			// TODO Auto-generated method stub
 			String status = "Aguardando....";
-			if (tanque1.Aquecendo())
-				 status = "Aquecendo em "+tanque1.getTemperaturaAquecimentoAtual()+", "+tanque1.getTempoAquecimentoAtual()+"s de "+" "+tanque1.getTempoAquecimentoTotal()+"s ";
+			if (HLT.Aquecendo())
+				 status = "Aquecendo em "+HLT.getTemperaturaAquecimentoAtual()+", "+HLT.getTempoAquecimentoAtual()+"s de "+" "+HLT.getTempoAquecimentoTotal()+"s ";
 			else
 				timer.cancel();
 
@@ -443,8 +467,8 @@ public class TesteComandos {
 			temperaturas.updateTemperaturas();
 			resistencias.updateResistencias();
 			bomba.updateStatus();
-			volumeTQ1.setText(String.valueOf(tanque1.getLevel()));
-			temperaturaTQ1.setText(String.valueOf(tanque1.getTemperatura()));
+			volumeTQ1.setText(String.valueOf(HLT.getLevel()));
+			temperaturaTQ1.setText(String.valueOf(HLT.getTemperatura()));
 			temperaturaTQ2.setText(String.valueOf(temperaturas.getTemperatura(1).getTemperatura()));
 			temperaturaTQ3.setText(String.valueOf(temperaturas.getTemperatura(2).getTemperatura()));
 			medidorvazao1.setText(String.valueOf(vazoes.getVazao(0).getInstantaneo())+"l/m");
@@ -458,7 +482,11 @@ public class TesteComandos {
 			valorresistencia1.setText(String.valueOf((resistencias.getResistencia(0).getPotencia()/255)*100));
 
 			bombaCirculoInterno.setFill(bomba.getColorStatus());
-			calcAlturaTanques(tq1_externo, tq1_interno, tanque1);
+			calcAlturaTanques(tq1_externo, tq1_interno, HLT);
+			calcAlturaTanques(tq2_externo, tq2_interno, MLT);
+			calcAlturaTanques(tq3_externo, tq3_interno, BK);
+			if (etapas.etapacorrente != null)
+				etapas.etapacorrente.verificarExecutando();
 			//medidorvazao4.setText(String.valueOf(vazoes.getVazao(3))+"l/m");
 			//System.out.println(String.valueOf(vazoes.getVazao(0))+"l/m");
 

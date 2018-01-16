@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.Double?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
@@ -12,7 +18,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TesteComandos">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TesteComandos">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="20.0" layoutX="861.0" layoutY="224.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" width="34.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="20.0" layoutX="869.0" layoutY="456.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" width="26.0" />
@@ -28,21 +34,21 @@
             <Line fx:id="resistencia1" endX="100.0" layoutX="40.0" layoutY="222.0" startX="34.0" stroke="#2516d3" strokeWidth="4.0" />
          </children>
       </Group>
-      <Button layoutX="236.0" layoutY="33.0" mnemonicParsing="false" onAction="#encherTq" text="Fase 1" />
+      <Button layoutX="236.0" layoutY="33.0" mnemonicParsing="false" onAction="#inciarEtapa1" text="Fase 1" />
       <Button layoutX="411.0" layoutY="484.0" mnemonicParsing="false" onAction="#startAquecimentoTQ1" text="Iniciar Aquecimento" />
       <TextField fx:id="statusAquecimento" layoutX="493.0" layoutY="114.0" prefHeight="25.0" prefWidth="254.0" />
       <Group id="GTanque2" layoutX="69.0" layoutY="15.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fffb0" height="144.0" layoutX="282.0" layoutY="210.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="118.0" />
-            <Rectangle fx:id="tq11" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" layoutX="284.0" layoutY="280.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="114.0" />
+            <Rectangle fx:id="tq2_externo" arcHeight="5.0" arcWidth="5.0" fill="#1fffb0" height="144.0" layoutX="282.0" layoutY="210.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="118.0" />
+            <Rectangle fx:id="tq2_interno" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" layoutX="284.0" layoutY="280.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="114.0" />
             <Label layoutX="327.0" layoutY="307.0" text="MT" />
             <Line fx:id="resistencia2" endX="100.0" layoutX="251.0" layoutY="345.0" startX="34.0" stroke="#2516d3" strokeWidth="4.0" />
          </children>
       </Group>
       <Group id="GTanque3" layoutX="341.0" layoutY="-36.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1fffb0" height="144.0" layoutX="551.0" layoutY="261.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="118.0" />
-            <Rectangle fx:id="tq111" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" layoutX="553.0" layoutY="330.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="114.0" />
+            <Rectangle fx:id="tq3_externo" arcHeight="5.0" arcWidth="5.0" fill="#1fffb0" height="144.0" layoutX="551.0" layoutY="261.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="118.0" />
+            <Rectangle fx:id="tq3_interno" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="71.0" layoutX="553.0" layoutY="330.0" onMouseClicked="#abrirRampa1" stroke="BLACK" strokeType="INSIDE" width="114.0" />
             <Label layoutX="596.0" layoutY="357.0" text="BT" />
             <Line fx:id="resistencia3" endX="100.0" layoutX="566.0" layoutY="391.0" startX="34.0" stroke="#2516d3" strokeWidth="4.0" />
          </children>
@@ -158,7 +164,7 @@
             </TextField>
          </children>
       </Group>
-      <Group id="GValvula3" layoutX="394.0" layoutY="-145.0" onContextMenuRequested="#abrirValvula7">
+      <Group id="GValvula3" layoutX="394.0" layoutY="-145.0" onContextMenuRequested="#abrirValvula3">
          <children>
             <Line fx:id="linhaV3" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV32" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -184,7 +190,7 @@
             </Polygon>
          </children>
       </Group>
-      <Group id="GValvula4" layoutX="712.0" layoutY="-66.0" onContextMenuRequested="#abrirValvula5">
+      <Group id="GValvula4" layoutX="712.0" layoutY="-66.0" onContextMenuRequested="#abrirValvula6">
          <children>
             <Line fx:id="linhaV6" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV62" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -210,7 +216,7 @@
             </Polygon>
          </children>
       </Group>
-      <Group id="GValvula5" layoutX="645.0" onContextMenuRequested="#abrirValvula3">
+      <Group id="GValvula5" layoutX="645.0" onContextMenuRequested="#abrirValvula4">
          <children>
             <Line fx:id="linhaV4" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV42" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -236,7 +242,7 @@
             </Polygon>
          </children>
       </Group>
-      <Group id="GValvula6" layoutX="718.0" onContextMenuRequested="#abrirValvula4">
+      <Group id="GValvula6" layoutX="718.0" onContextMenuRequested="#abrirValvula5">
          <children>
             <Line fx:id="linhaV5" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV52" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -262,7 +268,7 @@
             </Polygon>
          </children>
       </Group>
-      <Group id="GValvula7" layoutX="825.0" layoutY="81.0" onContextMenuRequested="#abrirValvula6">
+      <Group id="GValvula7" layoutX="825.0" layoutY="81.0" onContextMenuRequested="#abrirValvula7">
          <children>
             <Line fx:id="linhaV7" endX="100.0" layoutX="119.0" layoutY="330.0" rotate="90.0" scaleX="0.15" startX="-100.0" stroke="#2632d7" strokeWidth="4.0" />
             <Polygon fx:id="corpoV72" fill="DODGERBLUE" layoutX="129.0" layoutY="354.0" rotate="270.0" scaleX="0.2" scaleY="0.2" stroke="BLACK" strokeType="INSIDE">
@@ -383,9 +389,9 @@
       <TextField fx:id="temperaturaTQ3" layoutX="1016.0" layoutY="276.0" prefHeight="25.0" prefWidth="68.0" />
       <Label layoutX="471.0" layoutY="268.0" text="Temperatura:" />
       <Label layoutX="1016.0" layoutY="257.0" text="Temperatura:" />
-      <Button layoutX="297.0" layoutY="33.0" mnemonicParsing="false" text="Fase 2" />
-      <Button layoutX="359.0" layoutY="33.0" mnemonicParsing="false" text="Fase 3" />
-      <Button layoutX="423.0" layoutY="33.0" mnemonicParsing="false" text="Fase 4" />
+      <Button layoutX="297.0" layoutY="33.0" mnemonicParsing="false" onAction="#iniciarEtapa2" text="Fase 2" />
+      <Button layoutX="359.0" layoutY="33.0" mnemonicParsing="false" onAction="#iniciarEtapa3" text="Fase 3" />
+      <Button layoutX="423.0" layoutY="33.0" mnemonicParsing="false" onAction="#iniciarEtapa4" text="Fase 4" />
       <Button layoutX="487.0" layoutY="33.0" mnemonicParsing="false" text="Fase 5" />
       <Button layoutX="548.0" layoutY="33.0" mnemonicParsing="false" text="Fase 6" />
       <Button layoutX="605.0" layoutY="33.0" mnemonicParsing="false" text="Fase 7" />

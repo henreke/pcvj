@@ -12,7 +12,7 @@ public class Etapas{
 
 
 	public Etapa etapacorrente;
-
+	
 
 	public void teste(){
 		Etapa1 tesste = new Etapa1();
@@ -21,11 +21,41 @@ public class Etapas{
 
 	}
 
-	public void iniciaEtapa1(){
+	public void iniciaEtapa1(Tanque HLT, float volumeEncher){
 		etapacorrente = new Etapa1();
+		((Etapa1)etapacorrente).setTanqueHLT(HLT);
+		((Etapa1)etapacorrente).setVolumeEncher(volumeEncher);
+		etapacorrente.executarEtapa();
+	}
+	
+	public void iniciaEtapa2(Tanque HLT, float temperaturaAquecer) {
+		
+		etapacorrente = new Etapa2();
+		((Etapa2)etapacorrente).setHLT(HLT);
+		((Etapa2)etapacorrente).setTemperaturaAquecer(temperaturaAquecer);
+		etapacorrente.executarEtapa();
+		
+	}
+	
+	public void iniciaEtapa3(Tanque HLT, Tanque MLT, float volumeTransferir) {
+		etapacorrente = new Etapa3();
+		((Etapa3)etapacorrente).setTanques(HLT, MLT);
+		((Etapa3)etapacorrente).setVolumeTransferirMLT(volumeTransferir);
 		etapacorrente.executarEtapa();
 	}
 
+	public void iniciaEtapa4(Tanque HLT, Tanque MLT, float volumeTransferir, Valvula valvulaSuccao, Valvula valvulaDescarga, Bomba bomba, Vazao medidorVazao,float setVazao) {
+		
+		etapacorrente = new Etapa4();
+		((Etapa4)etapacorrente).setTanques(HLT, MLT);
+		((Etapa4)etapacorrente).setValvulas(valvulaSuccao, valvulaDescarga);
+		((Etapa4)etapacorrente).setBomba(bomba);
+		((Etapa4)etapacorrente).setSetVazao(setVazao);
+		((Etapa4)etapacorrente).setMedidorVazao(medidorVazao);
+		((Etapa4)etapacorrente).setVolumeTransferir(volumeTransferir);
+		etapacorrente.executarEtapa();
+		
+	}
 	public class Etapa{
 
 		public int numero;
@@ -169,6 +199,10 @@ public class Etapas{
 		public void setSetVazao(float setVazao){
 			this.setVazao = setVazao;
 		}
+		
+		public void setVolumeTransferir(float volumeTransferir) {
+			this.volumeTransferir = volumeTransferir;
+		}
 
 		public void executarEtapa(){
 			executando = true;
@@ -191,6 +225,11 @@ public class Etapas{
 		public boolean verificarConcluida(){
 			executando =  !MLT.AquecimentoConcluido();
 			concluida = MLT.AquecimentoConcluido();
+			if (concluida) {
+				bomba.desligar();
+				valvulaDescarga.fechar();
+				valvulaSuccao.fechar();
+			}
 			return concluida;
 		}
 
@@ -357,6 +396,10 @@ public class Etapas{
 			if ((System.currentTimeMillis()-tempoInical) >= tempo) {
 				executando = false;
 				concluida = true;
+				
+				bomba.desligar();
+				saidaBk.fechar();
+				entradaBK.fechar();
 			}
 			return concluida;
 		}
@@ -405,6 +448,10 @@ public class Etapas{
 			if (BK.getLevel() <= nivelMinimo) {
 				executando = false;
 				concluida = true;
+				bomba.desligar();
+				entradaAguaChiller.fechar();
+				entradaChiller.fechar();
+				saidaBk.fechar();
 			}
 			return concluida;
 		}

@@ -100,8 +100,8 @@ public class EditRampa {
     @FXML
     private void insertRow(){
 
-    	int ind = processoApp.tanque1.addRampaAquecimento(10,30);
-    	rampaData.add(processoApp.tanque1.getRampa(ind));
+    	int ind = processoApp.HLT.addRampaAquecimento(10,30);
+    	rampaData.add(processoApp.HLT.getRampa(ind));
     }
 
     @FXML
@@ -109,14 +109,14 @@ public class EditRampa {
     	int ind = rampaTable.getSelectionModel().getSelectedIndex();
     	if (ind > -1){
     		rampaData.remove(ind);
-    		processoApp.tanque1.removeRampaAquecimento(ind);
+    		processoApp.HLT.removeRampaAquecimento(ind);
     	}
     }
     public EditRampa(){}
 
     public void setMainApp(TesteComandos processoApp) {
         this.processoApp = processoApp;
-        rampaData.addAll(processoApp.tanque1.getArrayRampaAquecimento());
+        rampaData.addAll(processoApp.HLT.getArrayRampaAquecimento());
         // Adiciona os dados da observable list na tabela
         ///personTable.setItems(mainApp.getPersonData());
     }

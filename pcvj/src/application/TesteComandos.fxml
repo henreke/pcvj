@@ -28,7 +28,7 @@
             <Line fx:id="resistencia1" endX="100.0" layoutX="40.0" layoutY="222.0" startX="34.0" stroke="#2516d3" strokeWidth="4.0" />
          </children>
       </Group>
-      <Button layoutX="436.0" layoutY="40.0" mnemonicParsing="false" onAction="#encherTq" text="Encher Fase 1" />
+      <Button layoutX="236.0" layoutY="33.0" mnemonicParsing="false" onAction="#encherTq" text="Fase 1" />
       <Button layoutX="411.0" layoutY="484.0" mnemonicParsing="false" onAction="#startAquecimentoTQ1" text="Iniciar Aquecimento" />
       <TextField fx:id="statusAquecimento" layoutX="493.0" layoutY="114.0" prefHeight="25.0" prefWidth="254.0" />
       <Group id="GTanque2" layoutX="69.0" layoutY="15.0">
@@ -129,8 +129,8 @@
       <TextField fx:id="volumeTQ1" layoutX="282.0" layoutY="74.0" prefHeight="25.0" prefWidth="43.0" />
       <Label layoutX="236.0" layoutY="112.0" text="Temperatura:" />
       <TextField fx:id="temperaturaTQ1" layoutX="309.0" layoutY="108.0" prefHeight="25.0" prefWidth="56.0" />
-      <Button layoutX="560.0" layoutY="40.0" mnemonicParsing="false" onAction="#testeStatusValvula" text="Valvulas" />
-      <Button layoutX="663.0" layoutY="40.0" mnemonicParsing="false" onAction="#abrirValvula0" text="VAzoes" />
+      <Button layoutX="560.0" layoutY="74.0" mnemonicParsing="false" onAction="#testeStatusValvula" text="Valvulas" />
+      <Button layoutX="667.0" layoutY="74.0" mnemonicParsing="false" onAction="#abrirValvula0" text="VAzoes" />
       <Group id="Bomba" layoutX="14.0" layoutY="-75.0">
          <children>
             <Polygon fill="DODGERBLUE" layoutX="560.0" layoutY="460.0" scaleX="0.4" scaleY="0.4" stroke="BLACK" strokeType="INSIDE">
@@ -383,5 +383,12 @@
       <TextField fx:id="temperaturaTQ3" layoutX="1016.0" layoutY="276.0" prefHeight="25.0" prefWidth="68.0" />
       <Label layoutX="471.0" layoutY="268.0" text="Temperatura:" />
       <Label layoutX="1016.0" layoutY="257.0" text="Temperatura:" />
+      <Button layoutX="297.0" layoutY="33.0" mnemonicParsing="false" text="Fase 2" />
+      <Button layoutX="359.0" layoutY="33.0" mnemonicParsing="false" text="Fase 3" />
+      <Button layoutX="423.0" layoutY="33.0" mnemonicParsing="false" text="Fase 4" />
+      <Button layoutX="487.0" layoutY="33.0" mnemonicParsing="false" text="Fase 5" />
+      <Button layoutX="548.0" layoutY="33.0" mnemonicParsing="false" text="Fase 6" />
+      <Button layoutX="605.0" layoutY="33.0" mnemonicParsing="false" text="Fase 7" />
+      <Button layoutX="669.0" layoutY="33.0" mnemonicParsing="false" text="Fase 8" />
    </children>
 </AnchorPane>

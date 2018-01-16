@@ -11,17 +11,20 @@ public class Etapas{
 
 
 
-	public Etapa estapacorrente;
+	public Etapa etapacorrente;
 
 
 	public void teste(){
 		Etapa1 tesste = new Etapa1();
 
-	estapacorrente = tesste;
+	etapacorrente = tesste;
 
 	}
 
-
+	public void iniciaEtapa1(){
+		etapacorrente = new Etapa1();
+		etapacorrente.executarEtapa();
+	}
 
 	public class Etapa{
 
@@ -205,23 +208,23 @@ public class Etapas{
 		public void setBomba(Bomba bomba) {
 			this.bomba = bomba;
 		}
-		
+
 		public void setMedidorVazao(Vazao medidorBK) {
 			this.medidorBK = medidorBK;
 		}
-		
+
 		public void executarEtapa() {
 			executando = true;
 			concluida = false;
 			saidaMLT.abrir();
 			entradaBK.abrir();
-			while(saidaMLT.isClosed());			
+			while(saidaMLT.isClosed());
 			medidorBK.resetAcumulado();
 			bomba.setMedidor(medidorBK);
 			bomba.setVazao(setVazao);
-			bomba.ligar();			
+			bomba.ligar();
 		}
-		
+
 		public boolean verificarConcluida() {
 			if (medidorBK.getAcumulado() >= volumeAserTransferido) {
 				executando = false;
@@ -229,9 +232,9 @@ public class Etapas{
 			}
 			return concluida;
 		}
-		
+
 	}
-	
+
 	public class Etapa5B extends Etapa{
 		private Tanque HLT, MLT, BK;
 		private Bomba bomba;
@@ -246,28 +249,28 @@ public class Etapas{
 		public void setBomba(Bomba bomba) {
 			this.bomba = bomba;
 		}
-		
+
 		public void setMedidorVazao(Vazao medidorBK, Vazao medidorHLT) {
 			this.medidorBK = medidorBK;
 			this.medidorHLT = medidorHLT;
 		}
-		
+
 		public void executarEtapa() {
 			executando = true;
 			concluida = false;
 			saidaMLT.abrir();
 			entradaBK.abrir();
-			while(saidaMLT.isClosed());			
+			while(saidaMLT.isClosed());
 			medidorBK.resetAcumulado();
 			bomba.setMedidor(medidorBK);
 			bomba.setVazao(setVazao);
 			bomba.ligar();
-			
-			
+
+
 		}
-		
+
 	}
-	
+
 	public class Etapa6 extends Etapa{
 
 		private Tanque BK;
@@ -278,7 +281,7 @@ public class Etapas{
 		public void setTemperaturaAquecer(float temperaturaAquecer){
 			this.temperaturaAquecer = temperaturaAquecer;
 		}
-		
+
 		public void setTempoFervura(float tempoFervura) {
 			this.tempoFervura = tempoFervura*1000;
 		}
@@ -300,7 +303,7 @@ public class Etapas{
 					tempoInicial = System.currentTimeMillis();
 					tempAtigida = true;
 				}
-				
+
 				if ((System.currentTimeMillis() - tempoInicial) >= tempoFervura) {
 					executando = false;
 					concluida = true;
@@ -332,24 +335,24 @@ public class Etapas{
 		public void setMedidorVazao(Vazao medidorBK) {
 			this.medidorBK = medidorBK;
 		}
-		
+
 		public void setTempo(long tempo) {
 			this.tempo = tempo*1000;
 		}
-		
+
 		public void executarEtapa() {
 			executando = true;
 			concluida = false;
 			saidaBk.abrir();
 			entradaBK.abrir();
-			while(saidaBk.isClosed());			
+			while(saidaBk.isClosed());
 			medidorBK.resetAcumulado();
 			bomba.setMedidor(medidorBK);
 			bomba.setVazao(setVazao);
 			tempoInical = System.currentTimeMillis();
-			bomba.ligar();			
+			bomba.ligar();
 		}
-		
+
 		public boolean verificarConcluida() {
 			if ((System.currentTimeMillis()-tempoInical) >= tempo) {
 				executando = false;
@@ -357,9 +360,9 @@ public class Etapas{
 			}
 			return concluida;
 		}
-		
+
 	}
-	
+
 	public class Etapa8 extends Etapa{
 		private Tanque BK;
 		private Bomba bomba;
@@ -382,22 +385,22 @@ public class Etapas{
 			this.medidorBK = medidorBK;
 			this.medidorChiller = medidorChiller;
 		}
-		
-		
+
+
 		public void executarEtapa() {
 			executando = true;
 			concluida = false;
 			saidaBk.abrir();
 			entradaChiller.abrir();
 			entradaAguaChiller.abrir();
-			while(saidaBk.isClosed());			
+			while(saidaBk.isClosed());
 			medidorBK.resetAcumulado();
 			medidorChiller.resetAcumulado();
 			bomba.setMedidor(medidorBK);
 			bomba.setVazao(setVazao);
-			bomba.ligar();			
+			bomba.ligar();
 		}
-		
+
 		public boolean verificarConcluida() {
 			if (BK.getLevel() <= nivelMinimo) {
 				executando = false;
@@ -405,7 +408,7 @@ public class Etapas{
 			}
 			return concluida;
 		}
-		
+
 	}
 
 }

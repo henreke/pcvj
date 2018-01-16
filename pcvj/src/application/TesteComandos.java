@@ -17,6 +17,8 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import processo.Bomba;
+import processo.Etapas;
+import processo.Etapas.Etapa;
 import processo.Resistencias;
 import processo.Resistencias.Resistencia;
 import processo.Tanque;
@@ -197,6 +199,8 @@ public class TesteComandos {
 		timerUpdate = new Timer();
 		timerUpdate.scheduleAtFixedRate(new Relogio(), 2000, 1000);
 
+		etapas = new Etapas();
+
 
 	}
 
@@ -209,6 +213,7 @@ public class TesteComandos {
 	Timer timer;
 	public Timer timerUpdate;
 	int teste = 0;
+	public Etapas etapas;
 	public void setMainApp(MainApp mainApp) {
 
 		this.mainApp = mainApp;
@@ -379,6 +384,13 @@ public class TesteComandos {
 	private void abrirValvula8()
 	{
 		manipularValvula(valvulas.getValvula(8));
+
+	}
+
+	@FXML
+	private void inciarEtapa1(){
+
+		etapas.iniciaEtapa1();
 
 	}
 

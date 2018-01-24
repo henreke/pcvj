@@ -211,7 +211,7 @@ public class TesteComandos {
 		BK = new Tanque(vazoes.getVazao(1),vazoes.getVazao(2),temperaturas.getTemperatura(2),5,6,3);
 		BK.setResistencia(resistencias.getResistencia(2));
 		timerUpdate = new Timer();
-		timerUpdate.scheduleAtFixedRate(new Relogio(), 2000, 1000);
+		timerUpdate.scheduleAtFixedRate(new RelogioUpdate(), 2000, 1000);
 
 		etapas = new Etapas();
 
@@ -458,7 +458,7 @@ public class TesteComandos {
 
 	}
 
-	class Relogio extends TimerTask{
+	class RelogioUpdate extends TimerTask{
 
 
 		@Override

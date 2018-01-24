@@ -102,12 +102,12 @@ public class ComunicacaoTCP {
     }
 
     public void abrirValvula(int nValvula) throws IOException {
-            String msg = TipoMSG.VALVULA+"#" + String.valueOf(nValvula)+"#" + String.valueOf(Comandos.ABRIR);
+            String msg = TipoMSG.VALVULA+"#" + String.valueOf(nValvula)+"#" + String.valueOf(Comandos.ABRIR)+"#";
             sendMessage(msg);
     }
 
     public void fecharValvula(int nValvula) throws IOException {
-        String msg = TipoMSG.VALVULA+"#" + String.valueOf(nValvula)+"#" + String.valueOf(Comandos.FECHAR);
+        String msg = TipoMSG.VALVULA+"#" + String.valueOf(nValvula)+"#" + String.valueOf(Comandos.FECHAR)+"#";
         sendMessage(msg);
     }
     
@@ -208,6 +208,8 @@ public class ComunicacaoTCP {
     	try {
 			String retorno = sendMessageUpdate(msg);
 			System.out.println(retorno);
+			if (retorno.length() < 2)
+				return "";
 			if (retorno.charAt(0) == '$' && retorno.charAt(retorno.length() -1) =='$') {
 				retorno =  retorno.substring(2, retorno.length()-1);
 				return retorno;

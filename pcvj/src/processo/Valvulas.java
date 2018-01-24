@@ -40,6 +40,8 @@ public class Valvulas {
 			valvulasstatus[i] = valvulas.get(i).getNumero();
 
 		String Sstatus = comunicacao.getStatusValvulas(valvulasstatus);
+		if (Sstatus.length()<2)
+			return;
 		System.out.println(Sstatus);
 		String[] statusdivido = Sstatus.split("#");
 		for (int i=0; i<statusdivido.length; i++) {

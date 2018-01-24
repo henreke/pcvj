@@ -64,6 +64,9 @@ public class Tanque {
 
 	}
 
+	public void setResistencia(Resistencia resistencia) {
+		this.resistencia = resistencia;
+	}
 	public void setCapacidade(int capacidade) {
 		this.CapacidadeTanque = capacidade;
 	}

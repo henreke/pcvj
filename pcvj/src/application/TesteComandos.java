@@ -205,8 +205,11 @@ public class TesteComandos {
 		resistencias = new Resistencias(3);
 		bomba = new Bomba();
 		HLT = new Tanque(vazoes.getVazao(0),vazoes.getVazao(1),temperaturas.getTemperatura(0),0,1,1);
+		HLT.setResistencia(resistencias.getResistencia(0));
 		MLT = new Tanque(vazoes.getVazao(1),vazoes.getVazao(2),temperaturas.getTemperatura(1),1,2,2);
+		MLT.setResistencia(resistencias.getResistencia(1));
 		BK = new Tanque(vazoes.getVazao(1),vazoes.getVazao(2),temperaturas.getTemperatura(2),5,6,3);
+		BK.setResistencia(resistencias.getResistencia(2));
 		timerUpdate = new Timer();
 		timerUpdate.scheduleAtFixedRate(new Relogio(), 2000, 1000);
 

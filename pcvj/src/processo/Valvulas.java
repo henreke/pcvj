@@ -42,7 +42,7 @@ public class Valvulas {
 		String Sstatus = comunicacao.getStatusValvulas(valvulasstatus);
 		if (Sstatus.length()<2)
 			return;
-		System.out.println(Sstatus);
+		//System.out.println(Sstatus);
 		String[] statusdivido = Sstatus.split("#");
 		for (int i=0; i<statusdivido.length; i++) {
 				valvulas.get(i).setStatus(statusdivido[i].charAt(0));
@@ -102,7 +102,7 @@ public class Valvula {
 
 	void checkStatus() {
 		if ((status == Valvulas.ABERTA) ||(tipo == Valvulas.SOLENOIDE && status == Valvulas.ABRINDO)) {
-			System.out.println("Aberta");
+			//System.out.println("Aberta");
 			corpo1.setFill(Color.GREEN);
 			corpo2.setFill(Color.GREEN);
 			atuador.setFill(Color.GREEN);

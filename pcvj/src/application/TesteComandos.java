@@ -30,7 +30,7 @@ import processo.Vazoes;
 public class TesteComandos {
 
 	@FXML
-	private TextField temp1;
+	private TextField tempo;
 
 
 
@@ -235,13 +235,7 @@ public class TesteComandos {
 
 	@FXML
 	private void enviarPergunta() {
-		ComunicacaoTCP comunicacao = new ComunicacaoTCP("192.168.25.177", 1188);
-		try {
-			temp1.setText(comunicacao.getUpdate(1, ""));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 	@FXML
@@ -409,7 +403,7 @@ public class TesteComandos {
 
 	@FXML
 	private void iniciarEtapa2() {
-		etapas.iniciaEtapa2(HLT, 60);
+		etapas.iniciaEtapa2(HLT, 33);
 	}
 	
 	@FXML
@@ -467,6 +461,7 @@ public class TesteComandos {
 			valvulas.updateStatus();
 
 			vazoes.updateVazoes();
+			
 			temperaturas.updateTemperaturas();
 			resistencias.updateResistencias();
 			bomba.updateStatus();
@@ -490,6 +485,13 @@ public class TesteComandos {
 			calcAlturaTanques(tq3_externo, tq3_interno, BK);
 			if (etapas.etapacorrente != null)
 				etapas.etapacorrente.verificarExecutando();
+			
+			//Status do sistema
+			if (HLT.Aquecendo()) {
+				statusAquecimento.setText(HLT.getMsgStatus());
+				tempo.setText(String.valueOf(HLT.getTempoDecorrido()));
+			
+			}
 			//medidorvazao4.setText(String.valueOf(vazoes.getVazao(3))+"l/m");
 			//System.out.println(String.valueOf(vazoes.getVazao(0))+"l/m");
 

@@ -33,9 +33,13 @@ public class Tanque {
 	private ArrayList<RampaAquecimento> rampa = new ArrayList<RampaAquecimento>();
 	private int rampaAtual = 0;
 	public int CapacidadeTanque = 50;
-
+	private boolean atingiuTemperatura = false;
+	private String msgStatus;
+	
 	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
 	Timer timerUpdate;
+	private float setTemperaturaAtual;
+	
 	public Tanque(Vazao vazaoFill, Vazao vazaoDrain,Temperatura temperatura, int valvulaEncher, int valvulaSecar, int numeroTQ) {
 		this.vazaoFill = vazaoFill;
 		this.vazaoDrain = vazaoDrain;
@@ -47,12 +51,21 @@ public class Tanque {
 		//timerUpdate.scheduleAtFixedRate(new relogioUpdate(), 2000, 5000);
 	}
 
+	public String getMsgStatus() {
+		return msgStatus;
+	}
+	public int getTempoDecorrido() {
+		return tempoDecorridoAquecimento;
+	}
 	public void aquecer(int tempo, float temperatura){
 		resistencia.ligar();
 		tempoDecorridoAquecimento = 0;
 		tempoAquecimento = tempo;
 		timer = new Timer();
         timer.scheduleAtFixedRate(new relogio(),0, 1000);
+        setTemperaturaAtual = temperatura;
+		atingiuTemperatura = false;
+        msgStatus = "Aquecendo o Tanque a temperatura de "+ String.valueOf(temperatura)+ "por "+String.valueOf(tempo)+"segundos";
         pid.setSetPoint(temperatura);
         try {
 			comunicacao.sendPID(pid);
@@ -84,6 +97,8 @@ public class Tanque {
 		tempoDecorridoAquecimento = 0;
 		tempoAquecimento = rampaquecer.getTempo();
 		pid.setSetPoint(rampaquecer.getTemperatura());
+		setTemperaturaAtual = rampaquecer.getTemperatura();
+		atingiuTemperatura = false;
 		try {
 			comunicacao.sendPID(pid);
 		} catch (IOException e) {
@@ -93,6 +108,7 @@ public class Tanque {
 		timer = new Timer();
 
 		timer.scheduleAtFixedRate(new RelogioRampa(),0, 1000);
+		msgStatus = "Aquecendo o Tanque a temperatura de "+ String.valueOf(rampaquecer.getTemperatura())+ "por "+String.valueOf(rampaquecer.getTempo())+"segundos";
 		alternarStatusAquecimento(true);
 	}
 
@@ -216,19 +232,23 @@ public class Tanque {
 		@Override
 		public void run() {
 
-			tempoDecorridoAquecimento++;
-			if (tempoDecorridoAquecimento >= tempoAquecimento)
-			{
-				timer.cancel();
-				rampa.get(rampaAtual).finish();
-				rampaAtual++;
-				if (rampaAtual >= rampa.size())
-					pararAquecer();
-
-				else
-					aquecer(rampa.get(rampaAtual));
-
+			if (atingiuTemperatura) {
+				tempoDecorridoAquecimento++;
+				if (tempoDecorridoAquecimento >= tempoAquecimento)
+				{
+					timer.cancel();
+					rampa.get(rampaAtual).finish();
+					rampaAtual++;
+					if (rampaAtual >= rampa.size())
+						pararAquecer();
+	
+					else
+						aquecer(rampa.get(rampaAtual));
+	
+				}
 			}
+			else
+				atingiuTemperatura = (setTemperaturaAtual <= temperatura.getTemperatura());
 		}
 	}
 		class relogioUpdate extends TimerTask{

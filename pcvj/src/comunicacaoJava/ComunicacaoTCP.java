@@ -226,15 +226,17 @@ public class ComunicacaoTCP {
     	String msg = TipoMSG.UPDATE+"#"+TipoUpdate.FLOW+"#";
     	try {
     		String retorno = sendMessageUpdate(msg);
-    		if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
-    			retorno = retorno.substring(2, retorno.length()-2);
-    			String[] valores = retorno.split("#");
-    			float[][] valoresretorno = new float[valores.length/2][2];
-    			for (int i =0; i< valores.length/2; i++) {
-    				valoresretorno[i][0] = Float.parseFloat(valores[2*i]);
-    				valoresretorno[i][1] = Float.parseFloat(valores[2*i+1]);
-    			}
-    			return valoresretorno;
+    		if (retorno.length() > 1) {
+	    		if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
+	    			retorno = retorno.substring(2, retorno.length()-2);
+	    			String[] valores = retorno.split("#");
+	    			float[][] valoresretorno = new float[valores.length/2][2];
+	    			for (int i =0; i< valores.length/2; i++) {
+	    				valoresretorno[i][0] = Float.parseFloat(valores[2*i]);
+	    				valoresretorno[i][1] = Float.parseFloat(valores[2*i+1]);
+	    			}
+	    			return valoresretorno;
+	    		}
     		}
     	}catch (IOException e) {
 			// TODO Auto-generated catch block

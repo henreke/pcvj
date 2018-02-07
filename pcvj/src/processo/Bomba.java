@@ -15,11 +15,12 @@ public class Bomba{
 	private Vazao medidor;
 	int potencia;
 	char status;
-	PID pid = new PID(4,10,10,5,0);
+	PID pid = new PID(4,8,10,5,0);
 	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default,ComunicacaoTCP.porta_default);
 	public void ligar()
 	{
 		try {
+			comunicacao.sendPID(pid);
 			comunicacao.ligarBomba();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

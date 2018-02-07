@@ -126,7 +126,7 @@ public class Etapas{
 		}
 
 		public void executarEtapa(){
-			HLT.addRampaAquecimento(10000, temperaturaAquecer);
+			HLT.addRampaAquecimento(100, temperaturaAquecer);
 			HLT.aquecer(HLT.getRampa(0));
 			executando = true;
 			concluida = false;

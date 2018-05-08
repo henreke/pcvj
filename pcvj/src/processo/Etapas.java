@@ -102,7 +102,7 @@ public class Etapas{
 
 		public boolean verificarConcluida(){
 
-			if (HLT.getLevel() >= volumeEncher){
+			if (HLT.getLevelMedidorVazao() >= volumeEncher){
 				executando = false;
 				concluida = true;
 			}
@@ -163,7 +163,7 @@ public class Etapas{
 		}
 
 		public boolean verificarConcluida(){
-			if (MLT.getLevel() >= volumeTransferir){
+			if (MLT.getLevelMedidorVazao() >= volumeTransferir){
 				executando = false;
 				concluida = true;
 			}
@@ -446,7 +446,7 @@ public class Etapas{
 		}
 
 		public boolean verificarConcluida() {
-			if (BK.getLevel() <= nivelMinimo) {
+			if (BK.getLevelMedidorVazao() <= nivelMinimo) {
 				executando = false;
 				concluida = true;
 				bomba.desligar();

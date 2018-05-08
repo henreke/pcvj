@@ -27,12 +27,12 @@ public class Tanque {
 	private Timer timer;
 	private int valvulaEncher, valvulaSecar;
 	private Resistencia resistencia;
-	public PID pid = new PID(1,20,55,80,200);
+	public PID pid = new PID(1,20,10,8,10000);
 	private boolean Aquecendo = false;
 	private boolean AquecimentoConcluido = false;
 	private ArrayList<RampaAquecimento> rampa = new ArrayList<RampaAquecimento>();
 	private int rampaAtual = 0;
-	public int CapacidadeTanque = 50;
+	public int CapacidadeTanque = 40;
 	private boolean atingiuTemperatura = false;
 	private String msgStatus;
 	
@@ -76,7 +76,10 @@ public class Tanque {
         alternarStatusAquecimento(true);
 
 	}
-
+	public void setPIdNumber(int n)
+	{
+		pid.nPID = n;
+	}
 	public void setResistencia(Resistencia resistencia) {
 		this.resistencia = resistencia;
 	}
@@ -84,7 +87,7 @@ public class Tanque {
 		this.CapacidadeTanque = capacidade;
 	}
 	public double calcLevelGraphics() {
-		double saida = (getLevel() / (CapacidadeTanque*1.00));
+		double saida = (getLevelMedidorVazao() / (CapacidadeTanque*1.00));
 		return saida;
 	}
 	private void alternarStatusAquecimento(boolean status){
@@ -166,10 +169,13 @@ public class Tanque {
 
 	}
 
-	public float getLevel(){
+	public float getLevelMedidorVazao(){
 		return vazaoFill.getAcumulado()-vazaoDrain.getAcumulado();
 	}
 
+	public float getLevel() {
+		return vazaoFill.getAcumulado();
+	}
 	public int getTempoDecorridoAquecimento(){
 		return tempoDecorridoAquecimento;
 	}

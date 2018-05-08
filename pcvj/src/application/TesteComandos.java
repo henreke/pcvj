@@ -208,8 +208,10 @@ public class TesteComandos {
 		HLT.setResistencia(resistencias.getResistencia(0));
 		MLT = new Tanque(vazoes.getVazao(1),vazoes.getVazao(2),temperaturas.getTemperatura(1),1,2,2);
 		MLT.setResistencia(resistencias.getResistencia(1));
-		BK = new Tanque(vazoes.getVazao(1),vazoes.getVazao(2),temperaturas.getTemperatura(2),5,6,3);
+		MLT.setPIdNumber(2);
+		BK = new Tanque(vazoes.getVazao(3),vazoes.getVazao(2),temperaturas.getTemperatura(2),5,6,3);
 		BK.setResistencia(resistencias.getResistencia(2));
+		BK.setPIdNumber(3);
 		timerUpdate = new Timer();
 		timerUpdate.scheduleAtFixedRate(new RelogioUpdate(), 2000, 1000);
 
@@ -408,12 +410,14 @@ public class TesteComandos {
 	
 	@FXML
 	private void iniciarEtapa3() {
-		etapas.iniciaEtapa3(HLT, MLT, 60);
+		etapas.iniciaEtapa3(HLT, MLT, 20);
 	}
 	
 	@FXML
 	private void iniciarEtapa4() {
-		etapas.iniciaEtapa4(HLT, MLT, 20, valvulas.getValvula(1), valvulas.getValvula(2), bomba, vazoes.getVazao(2), 2);
+		//etapas.iniciaEtapa4(HLT, MLT, 20, valvulas.getValvula(1), valvulas.getValvula(2), bomba, vazoes.getVazao(2), 2);
+		MLT.addRampaAquecimento(10000, 60);
+		MLT.aquecer(MLT.getRampa(0));
 	}
 	private void adicionarValvulas() {
 		valvulas.addValvula(0, Valvulas.SOLENOIDE, atuadorV0, corpoV01, corpoV02, linhaV0);
@@ -427,7 +431,16 @@ public class TesteComandos {
 		valvulas.addValvula(8, Valvulas.SOLENOIDE, atuadorV8, corpoV81, corpoV82, linhaV8);
 	}
 	private void calcAlturaTanques(Rectangle externo, Rectangle interno, Tanque tanque) {
-		interno.setHeight((externo.getHeight()/tanque.CapacidadeTanque)*tanque.getLevel());
+		interno.setHeight((externo.getHeight()/tanque.CapacidadeTanque)*tanque.getLevelMedidorVazao());
+
+		if (interno.getHeight() > (externo.getHeight()-2))
+			interno.setHeight(externo.getHeight() - 2);
+		interno.setLayoutY(externo.getLayoutY()+externo.getHeight()-2-interno.getHeight());
+	}
+	private void calcAlturaTanques2(Rectangle externo, Rectangle interno, Tanque tanque) {
+		double a = 0.134234871;
+		double b = -4.34684987;
+		interno.setHeight((externo.getHeight()/tanque.CapacidadeTanque)*(a*tanque.getLevel()+b));
 
 		if (interno.getHeight() > (externo.getHeight()-2))
 			interno.setHeight(externo.getHeight() - 2);
@@ -465,7 +478,7 @@ public class TesteComandos {
 			temperaturas.updateTemperaturas();
 			resistencias.updateResistencias();
 			bomba.updateStatus();
-			volumeTQ1.setText(String.valueOf(HLT.getLevel()));
+			volumeTQ1.setText(String.valueOf(HLT.getLevelMedidorVazao()));
 			temperaturaTQ1.setText(String.valueOf(HLT.getTemperatura()));
 			temperaturaTQ2.setText(String.valueOf(temperaturas.getTemperatura(1).getTemperatura()));
 			temperaturaTQ3.setText(String.valueOf(temperaturas.getTemperatura(2).getTemperatura()));
@@ -478,11 +491,11 @@ public class TesteComandos {
 			resistencia3.setStroke(resistencias.getResistencia(2).getColorStatus());
 
 			valorresistencia1.setText(String.valueOf((resistencias.getResistencia(0).getPotencia()/255)*100));
-
+			valorresistencia2.setText(String.valueOf((resistencias.getResistencia(1).getPotencia()/255)*100));
 			bombaCirculoInterno.setFill(bomba.getColorStatus());
 			calcAlturaTanques(tq1_externo, tq1_interno, HLT);
-			calcAlturaTanques(tq2_externo, tq2_interno, MLT);
-			calcAlturaTanques(tq3_externo, tq3_interno, BK);
+			calcAlturaTanques2(tq2_externo, tq2_interno, MLT);
+			calcAlturaTanques2(tq3_externo, tq3_interno, BK);
 			if (etapas.etapacorrente != null)
 				etapas.etapacorrente.verificarExecutando();
 			

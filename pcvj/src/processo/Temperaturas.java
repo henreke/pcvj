@@ -2,11 +2,11 @@ package processo;
 
 import java.util.ArrayList;
 
-import comunicacaoJava.ComunicacaoTCP;
+import comunicacaoJava.ComunicacaoSerial;
 
 public class Temperaturas{
 
-	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
+	ComunicacaoSerial comunicacao;
 
 	ArrayList<Temperatura> temperaturas = new ArrayList<Temperatura>();
 
@@ -18,14 +18,21 @@ public class Temperaturas{
 	public Temperatura getTemperatura(int i){
 		return temperaturas.get(i);
 	}
-
+	public void setComunicacao(ComunicacaoSerial comunicacao) {
+		this.comunicacao = comunicacao;
+	}
 
 	public void updateTemperaturas(){
 
 		float[] temperaturasF = comunicacao.getTemperaturas();
-
-		for (int i=0; i< temperaturasF.length; i++)
-			temperaturas.get(i).setTemperatura(temperaturasF[i]);
+		if (temperaturasF == null)
+				return;
+		if (temperaturasF.length >= temperaturas.size()) {
+			for (int i=0; i< temperaturas.size(); i++) {
+				
+				temperaturas.get(i).setTemperatura(temperaturasF[i]);
+			}
+		}
 
 	}
 

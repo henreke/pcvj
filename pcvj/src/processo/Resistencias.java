@@ -3,7 +3,7 @@ package processo;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import comunicacaoJava.ComunicacaoTCP;
+import comunicacaoJava.ComunicacaoSerial;
 import javafx.scene.paint.Color;
 
 public class Resistencias {
@@ -11,8 +11,11 @@ public class Resistencias {
 	
 	int numeroResistencias =3;
 	ArrayList<Resistencia> resistencias = new ArrayList<Resistencia>();
-	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
+	ComunicacaoSerial comunicacao;
 	
+	public void setComunicacao(ComunicacaoSerial comunicacao) {
+		this.comunicacao = comunicacao;
+	}
 	public Resistencias() {
 		for (int i=0;i<numeroResistencias;i++)
 			resistencias.add(new Resistencia((char)(Resistencia.R1+i)));
@@ -31,6 +34,11 @@ public class Resistencias {
 	public void updateResistencias() {
 		
 		int[] estados =  comunicacao.getResistencias();		
+		if (estados == null)
+			return;
+		if (estados.length != resistencias.size()*2)
+			return;
+				
 		for (int i = 0; i< resistencias.size();i++) 
 			resistencias.get(i).setPotenciaStatus(estados[2*i+1], (char)estados[2*i]);		
 	}

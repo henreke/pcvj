@@ -2,7 +2,7 @@ package processo;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import comunicacaoJava.ComunicacaoTCP;
+import comunicacaoJava.ComunicacaoSerial;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
@@ -18,15 +18,18 @@ public class Valvulas {
 	public static char SOLENOIDE = 11;
 
 	private ArrayList<Valvula> valvulas = new ArrayList<Valvula>();
-	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
-
+	//ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
+	ComunicacaoSerial comunicacao = new ComunicacaoSerial(Util.Configuracoes.portaSerial);
 
 
 	public void addValvula(int numero,int tipo, Rectangle atuador, Polygon corpo1, Polygon corpo2, Line linha) {
 
 		valvulas.add(new Valvula(numero,tipo,atuador,corpo1,corpo2,linha));
 	}
-
+	public void setComunicacao(ComunicacaoSerial comunicacao)
+	{
+		this.comunicacao = comunicacao;
+	}
 	public int getStatusValvula(int indice) {
 		return valvulas.get(indice).getStatus();
 	}
@@ -39,7 +42,7 @@ public class Valvulas {
 		for (int i=0;i<valvulas.size();i++)
 			valvulasstatus[i] = valvulas.get(i).getNumero();
 
-		String Sstatus = comunicacao.getStatusValvulas(valvulasstatus);
+		String Sstatus = comunicacao.getStatusValvulas();
 		if (Sstatus.length()<2)
 			return;
 		//System.out.println(Sstatus);

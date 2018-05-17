@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import comunicacaoJava.ComunicacaoSerial;
 import comunicacaoJava.ComunicacaoTCP;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -197,13 +198,22 @@ public class TesteComandos {
 	@FXML
 	private void initialize() {
 
-
+		try {
+			comunicacao.conectar();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		valvulas = new Valvulas();
+		valvulas.setComunicacao(comunicacao);
 		adicionarValvulas();
 		vazoes = new Vazoes();
-		temperaturas = new Temperaturas(4);
+		temperaturas = new Temperaturas(3);
+		temperaturas.setComunicacao(comunicacao);
 		resistencias = new Resistencias(3);
+		resistencias.setComunicacao(comunicacao);
 		bomba = new Bomba();
+		bomba.setComunicacao(comunicacao);
 		HLT = new Tanque(vazoes.getVazao(0),vazoes.getVazao(1),temperaturas.getTemperatura(0),0,1,1);
 		HLT.setResistencia(resistencias.getResistencia(0));
 		MLT = new Tanque(vazoes.getVazao(1),vazoes.getVazao(2),temperaturas.getTemperatura(1),1,2,2);
@@ -230,6 +240,7 @@ public class TesteComandos {
 	public Timer timerUpdate;
 	int teste = 0;
 	public Etapas etapas;
+	ComunicacaoSerial comunicacao = new ComunicacaoSerial(Util.Configuracoes.portaSerial);
 	public void setMainApp(MainApp mainApp) {
 
 		this.mainApp = mainApp;
@@ -471,9 +482,10 @@ public class TesteComandos {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
+			try {
 			valvulas.updateStatus();
 
-			vazoes.updateVazoes();
+			//vazoes.updateVazoes();
 			
 			temperaturas.updateTemperaturas();
 			resistencias.updateResistencias();
@@ -507,7 +519,10 @@ public class TesteComandos {
 			}
 			//medidorvazao4.setText(String.valueOf(vazoes.getVazao(3))+"l/m");
 			//System.out.println(String.valueOf(vazoes.getVazao(0))+"l/m");
-
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
 
 

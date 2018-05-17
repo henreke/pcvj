@@ -1,12 +1,14 @@
 package comunicacaoJava;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
+import gnu.io.CommPort;
+import gnu.io.CommPortIdentifier;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 import processo.PID;
@@ -22,33 +24,51 @@ public class ComunicacaoSerial {
 
     
 	String porta;
-    
+	SerialPort serialPort;
+	InputStream in;
+	OutputStream out;
+	public static String valvulas, temperaturas, bombas, resistencias;
     public void setPortaCOM(String porta){
         this.porta = porta;
     }
-    public int getPortaCOM(){
+    public String getPortaCOM(){
         return this.porta;
     }
-    public OutputStream conectar(){
-
-        try {
-            //if (conexao == null){
-                conexao = new Socket(this.ip,this.porta);
-
-               // conexao.connect(conexao.getRemoteSocketAddress(), 3000);
-          //  }
-            return conexao.getOutputStream();
-        } catch (IOException e) {
-            return null;
+    public void conectar() throws Exception
+    {
+    	String portName = porta;
+        CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
+        if ( portIdentifier.isCurrentlyOwned() )
+        {
+            System.out.println("Error: Port is currently in use");
         }
+        else
+        {
+            CommPort commPort = portIdentifier.open(this.getClass().getName(),2000);
+            
+            if ( commPort instanceof SerialPort )
+            {
+                serialPort = (SerialPort) commPort;
+                serialPort.setSerialPortParams(115200,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
+                
+                in = serialPort.getInputStream();
+                out = serialPort.getOutputStream();
+                               
+                
+                
+                serialPort.addEventListener(new SerialReader(in));
+                serialPort.notifyOnDataAvailable(true);
+
+            }
+            else
+            {
+                System.out.println("Error: Only serial ports are handled by this example.");
+            }
+        }     
     }
-    public boolean desconectar(){
-        try {
-            conexao.close();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
+    public boolean desconectar() throws IOException{
+        //conexao.close();
+		return true;
     }
     public ComunicacaoSerial(String  porta)
     {
@@ -56,10 +76,10 @@ public class ComunicacaoSerial {
     }
 
     public void sendMessage(String msg) throws IOException {
-        canal = conectar();
-        if (canal != null) {
+        
+        if (out != null) {
             String msg2 ='$'+msg+'$';
-            canal.write(msg2.getBytes());
+            out.write(msg2.getBytes());
         }
     }
 
@@ -100,11 +120,7 @@ public class ComunicacaoSerial {
         sendMessage(msg);
     }
 
-    public String getUpdate(int tipo, String msg) throws IOException
-    {
-    	String msgenvio = TipoMSG.UPDATE+"#"+msg;
-    	return sendMessageUpdate(msgenvio);
-    }
+
 
     public void sendEncher(int Nsensor, float quantidade, int Nvalvula) throws IOException{
     	String msgenvio = TipoMSG.ENCHERTANQUE+"#"+quantidade+"#"+Nvalvula +"#"+Nsensor+"#";
@@ -118,147 +134,133 @@ public class ComunicacaoSerial {
 
 
 
-    public String getStatusValvulas(String valvulas) {
+    public String getStatusValvulas() {
 
-
-    	try {
-
-			if (valvulas.length() < 2)
-				return "";
-			if (valvulas.charAt(0) == '$' && valvulas.charAt(valvulas.length() -1) =='$') {
-				valvulas =  valvulas.substring(2, valvulas.length()-1);
-				return valvulas;
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+    	if (valvulas == null)
+    		return "";
+    	if (valvulas.length() < 2)
 			return "";
+		if (valvulas.charAt(0) == '$' && valvulas.charAt(valvulas.length() -1) =='$') {
+			valvulas =  valvulas.substring(2, valvulas.length()-1);
+			return valvulas;
 		}
     	return "";
     }
 
     public float[][] getFlows(String flows) {
     	
-    	try {
-    		String retorno = flows;
-    		if (retorno.length() > 1) {
-	    		if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
-	    			retorno = retorno.substring(2, retorno.length()-2);
-	    			String[] valores = retorno.split("#");
-	    			float[][] valoresretorno = new float[valores.length/2][2];
-	    			for (int i =0; i< valores.length/2; i++) {
-	    				valoresretorno[i][0] = Float.parseFloat(valores[2*i]);
-	    				valoresretorno[i][1] = Float.parseFloat(valores[2*i+1]);
-	    			}
-	    			return valoresretorno;
-	    		}
-    		}
-    	}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+    	String retorno = flows;
+		if (retorno.length() > 1) {
+			if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
+				retorno = retorno.substring(2, retorno.length()-2);
+				String[] valores = retorno.split("#");
+				float[][] valoresretorno = new float[valores.length/2][2];
+				for (int i =0; i< valores.length/2; i++) {
+					valoresretorno[i][0] = Float.parseFloat(valores[2*i]);
+					valoresretorno[i][1] = Float.parseFloat(valores[2*i+1]);
+				}
+				return valoresretorno;
+			}
 		}
 
 
     	return null;
     }
-    public float[] getTemperaturas(String temperaturas){
+    public float[] getTemperaturas(){
     	
-    	try {
-			String retorno = temperaturas;
-			if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
+    	if (temperaturas == null)
+    		return null;
+    	String retorno = temperaturas;
+    	 
+		if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
+			
+			retorno = retorno.substring(2, retorno.length()-2);
+			String[] valores = retorno.split("#");
+			float[] valoresretorno = new float[valores.length];
+			for (int i=0; i< valoresretorno.length;i++)
+				valoresretorno[i] = Float.parseFloat(valores[i]);
 
-				retorno = retorno.substring(2, retorno.length()-2);
-				String[] valores = retorno.split("#");
-				float[] valoresretorno = new float[valores.length];
-				for (int i=0; i< valoresretorno.length;i++)
-					valoresretorno[i] = Float.parseFloat(valores[i]);
-
-				return valoresretorno;
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			return valoresretorno;
 		}
     	return null;
     }
     
-    public int[] getResistencias(String resistencias) {
+    public int[] getResistencias() {
     	
-    	
-    	try {
-			String retorno = resistencias;
-			if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
-				retorno = retorno.substring(2, retorno.length()-2);
-				String[] valores = retorno.split("#");
-				int[] valoresretorno = new int[valores.length];
-				for (int i=0; i< valoresretorno.length;i++)
-					valoresretorno[i] = Integer.parseInt(valores[i]);
+    	if (resistencias == null)
+    			return null;
+    	String retorno = resistencias;
+		if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
+			retorno = retorno.substring(2, retorno.length()-2);
+			String[] valores = retorno.split("#");
+			int[] valoresretorno = new int[valores.length];
+			for (int i=0; i< valoresretorno.length;i++)
+				valoresretorno[i] = Integer.parseInt(valores[i]);
 
-				return valoresretorno;
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			return valoresretorno;
 		}
     	
     	return null;
     }
-    public int[] getStatusBomba(String bombas) {
+    public int[] getStatusBomba() {
     	
+    	if (bombas ==null)
+    		return null;
+    	String retorno = bombas;
     	
-    	try {
-			String retorno = bombas;
-			if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
-				retorno = retorno.substring(2, retorno.length()-2);
-				String[] valores = retorno.split("#");
-				int[] valoresretorno = new int[valores.length];
-				for (int i=0; i< valoresretorno.length;i++)
-					valoresretorno[i] = Integer.parseInt(valores[i]);
+		if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
+			retorno = retorno.substring(2, retorno.length()-2);
+			String[] valores = retorno.split("#");
+			int[] valoresretorno = new int[valores.length];
+			for (int i=0; i< valoresretorno.length;i++)
+				valoresretorno[i] = Integer.parseInt(valores[i]);
 
-				return valoresretorno;
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			return valoresretorno;
 		}
     	return null;
     }
     
-    
+    public static class SerialReader implements SerialPortEventListener 
+    {
+        private InputStream in;
+        private byte[] buffer = new byte[1024];
+        
+        public SerialReader ( InputStream in )
+        {
+            this.in = in;
+        }
+        
+        public void serialEvent(SerialPortEvent arg0) {
+            int data;
+          
+            try
+            {
+                int len = 0;
+                while ( ( data = in.read()) > -1 )
+                {
+                    if ( data == '\n' ) {
+                        break;
+                    }
+                    buffer[len++] = (byte) data;
+                }
+                String recebido = new String(buffer,0,len);
+                System.out.println(recebido);
+                String[] array_recebido = recebido.split(">");
+                valvulas = array_recebido[1];
+                temperaturas = array_recebido[2];
+                bombas = array_recebido[3];
+                resistencias = array_recebido[4];
+                //System.out.println("Novo");
+                //for (int i=0;i<array_recebido.length;i++)
+                //	System.out.println(array_recebido[i]);
+            }
+            catch ( IOException e )
+            {
+                e.printStackTrace();
+                System.exit(-1);
+            }             
+        }
+
+    }
    
 }
-class TipoMSG{
-
-    public static final char VALVULA = 10;
-    public static final char PID = 11;
-    public static final char BOMBA = 12;
-    public static final char ENCHERTANQUE = 14;
-    public static final char UPDATE = 16;
-    public static final char RESISTENCIA = 17;
-    public static final char RESET_ACUMULADO = 18;
-}
-class TipoUpdate{
-	public static final char LEVEL = 33;
-	public static final char FLOW = 36;
-	public static final char LEVEL_TEMPERATURE = 38;
-	public static final char VALVULAS = 39;
-	public static final char TEMPERATURES = 40;
-	public static final char UPDATE_STATUS_BOMBA = 41;
-	public static final char UPDATE_STATUS_RESISTENCIAS = 42;
-}
-class Comandos{
-
-    public static final char ABRIR = 'A';
-    public static final char FECHAR = 'F';
-    public static final char LIGAR = 'L';
-    public static final char DESLIGAR = 'D';
-
-}
-
-
-
-

@@ -3,7 +3,7 @@ package processo;
 import java.io.IOException;
 
 
-import comunicacaoJava.ComunicacaoTCP;
+import comunicacaoJava.ComunicacaoSerial;
 import javafx.scene.paint.Color;
 import processo.Resistencias.Resistencia;
 import processo.Vazoes.Vazao;
@@ -16,11 +16,21 @@ public class Bomba{
 	int potencia;
 	char status;
 	PID pid = new PID(4,13,5.5f,5.01f,0);
-	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default,ComunicacaoTCP.porta_default);
+	ComunicacaoSerial comunicacao;
+	
+	public void setComunicacao(ComunicacaoSerial comunicacao) {
+		this.comunicacao = comunicacao;
+	}
 	public void ligar()
 	{
 		try {
 			comunicacao.sendPID(pid);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			comunicacao.ligarBomba();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -53,7 +63,8 @@ public class Bomba{
 
 	public void updateStatus() {
 		int[] stat = comunicacao.getStatusBomba();
-
+		if (stat == null)
+			return;
 		status = (char) stat[0];
 		potencia = stat[1];
 	}

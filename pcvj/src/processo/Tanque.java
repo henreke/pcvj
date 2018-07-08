@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import comunicacaoJava.ComunicacaoTCP;
+import comunicacaoJava.ComunicacaoSerial;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
@@ -36,7 +36,7 @@ public class Tanque {
 	private boolean atingiuTemperatura = false;
 	private String msgStatus;
 	
-	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
+	ComunicacaoSerial comunicacao;// = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
 	Timer timerUpdate;
 	private float setTemperaturaAtual;
 	
@@ -50,7 +50,9 @@ public class Tanque {
 		//timerUpdate = new Timer();
 		//timerUpdate.scheduleAtFixedRate(new relogioUpdate(), 2000, 5000);
 	}
-
+	public void setComunicacao(ComunicacaoSerial comunicacao) {
+		this.comunicacao = comunicacao;
+	}
 	public String getMsgStatus() {
 		return msgStatus;
 	}
@@ -263,7 +265,7 @@ public class Tanque {
 			@Override
 			public void run() {
 				//Nivel
-				float[] dados = comunicacao.getLevelTemperature(vazaoFill.getNsensor(), temperatura.getNsensor());
+				float[] dados = {0};//comunicacao.getLevelTemperature(vazaoFill.getNsensor(), temperatura.getNsensor());
 				//level = comunicacao.getLevel(sensorVazaoEncher);
 				level = dados[0];
 				temperatura.setTemperatura(dados[1]);

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import comunicacaoJava.ComunicacaoTCP;
+import comunicacaoJava.ComunicacaoSerial;
 import processo.Tanque.relogioUpdate;
 
 
@@ -13,7 +13,7 @@ public class Vazoes {
 
 	static int Nmedidores = 4;
 	ArrayList<Vazao> vazoes = new ArrayList<Vazao>();
-	ComunicacaoTCP comunicacao = new ComunicacaoTCP(ComunicacaoTCP.ip_default, ComunicacaoTCP.porta_default);
+	ComunicacaoSerial comunicacao;;
 
 	Timer timerUpdate;
 
@@ -24,7 +24,9 @@ public class Vazoes {
 		//timerUpdate = new Timer();
 		//timerUpdate.scheduleAtFixedRate(new relogioUpdate(), 2000, 1000);
 	}
-
+	public void setComunicacao(ComunicacaoSerial comunicacao) {
+		this.comunicacao = comunicacao;
+	}
 	public Vazao getVazao(int indice) {
 		return vazoes.get(indice);
 	}
@@ -34,6 +36,8 @@ public class Vazoes {
 
 	public void updateVazoes() {
 		float[][] Vvazoes = comunicacao.getFlows();
+		if (Vvazoes == null)
+			return;
 		for (int i=0;i<Nmedidores;i++){
 			vazoes.get(i).setInstAcumulado(Vvazoes[i][0], Vvazoes[i][1]);
 //			System.out.println("VAzao e acumulado");

@@ -208,6 +208,7 @@ public class TesteComandos {
 		valvulas.setComunicacao(comunicacao);
 		adicionarValvulas();
 		vazoes = new Vazoes();
+		vazoes.setComunicacao(comunicacao);
 		temperaturas = new Temperaturas(3);
 		temperaturas.setComunicacao(comunicacao);
 		resistencias = new Resistencias(3);
@@ -216,12 +217,15 @@ public class TesteComandos {
 		bomba.setComunicacao(comunicacao);
 		HLT = new Tanque(vazoes.getVazao(0),vazoes.getVazao(1),temperaturas.getTemperatura(0),0,1,1);
 		HLT.setResistencia(resistencias.getResistencia(0));
+		HLT.setComunicacao(comunicacao);
 		MLT = new Tanque(vazoes.getVazao(1),vazoes.getVazao(2),temperaturas.getTemperatura(1),1,2,2);
 		MLT.setResistencia(resistencias.getResistencia(1));
 		MLT.setPIdNumber(2);
-		BK = new Tanque(vazoes.getVazao(3),vazoes.getVazao(2),temperaturas.getTemperatura(2),5,6,3);
+		MLT.setComunicacao(comunicacao);
+		BK = new Tanque(vazoes.getVazao(2),vazoes.getVazao(2),temperaturas.getTemperatura(2),5,6,3);
 		BK.setResistencia(resistencias.getResistencia(2));
 		BK.setPIdNumber(3);
+		BK.setComunicacao(comunicacao);
 		timerUpdate = new Timer();
 		timerUpdate.scheduleAtFixedRate(new RelogioUpdate(), 2000, 1000);
 
@@ -410,7 +414,7 @@ public class TesteComandos {
 
 	@FXML
 	private void inciarEtapa1(){
-		etapas.iniciaEtapa1(HLT,20);
+		etapas.iniciaEtapa1(HLT,120);
 
 	}
 
@@ -485,12 +489,12 @@ public class TesteComandos {
 			try {
 			valvulas.updateStatus();
 
-			//vazoes.updateVazoes();
+			vazoes.updateVazoes();
 			
 			temperaturas.updateTemperaturas();
 			resistencias.updateResistencias();
 			bomba.updateStatus();
-			volumeTQ1.setText(String.valueOf(HLT.getLevelMedidorVazao()));
+			volumeTQ1.setText(String.valueOf(HLT.getLevel()));
 			temperaturaTQ1.setText(String.valueOf(HLT.getTemperatura()));
 			temperaturaTQ2.setText(String.valueOf(temperaturas.getTemperatura(1).getTemperatura()));
 			temperaturaTQ3.setText(String.valueOf(temperaturas.getTemperatura(2).getTemperatura()));
@@ -504,8 +508,9 @@ public class TesteComandos {
 
 			valorresistencia1.setText(String.valueOf((resistencias.getResistencia(0).getPotencia()/255)*100));
 			valorresistencia2.setText(String.valueOf((resistencias.getResistencia(1).getPotencia()/255)*100));
+			valorresistencia3.setText(String.valueOf((resistencias.getResistencia(2).getPotencia()/255)*100));
 			bombaCirculoInterno.setFill(bomba.getColorStatus());
-			calcAlturaTanques(tq1_externo, tq1_interno, HLT);
+			calcAlturaTanques2(tq1_externo, tq1_interno, HLT);
 			calcAlturaTanques2(tq2_externo, tq2_interno, MLT);
 			calcAlturaTanques2(tq3_externo, tq3_interno, BK);
 			if (etapas.etapacorrente != null)

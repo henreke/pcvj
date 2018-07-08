@@ -27,7 +27,7 @@ public class ComunicacaoSerial {
 	SerialPort serialPort;
 	InputStream in;
 	OutputStream out;
-	public static String valvulas, temperaturas, bombas, resistencias;
+	public static String valvulas, temperaturas, bombas, resistencias,vazoes;
     public void setPortaCOM(String porta){
         this.porta = porta;
     }
@@ -147,9 +147,9 @@ public class ComunicacaoSerial {
     	return "";
     }
 
-    public float[][] getFlows(String flows) {
+    public float[][] getFlows() {
     	
-    	String retorno = flows;
+    	String retorno = vazoes;
 		if (retorno.length() > 1) {
 			if (retorno.charAt(0)=='$' && retorno.charAt(retorno.length() - 1)=='$') {
 				retorno = retorno.substring(2, retorno.length()-2);
@@ -246,10 +246,13 @@ public class ComunicacaoSerial {
                 String recebido = new String(buffer,0,len);
                 System.out.println(recebido);
                 String[] array_recebido = recebido.split(">");
+                if (array_recebido.length < 5)
+                	return;
                 valvulas = array_recebido[1];
                 temperaturas = array_recebido[2];
                 bombas = array_recebido[3];
                 resistencias = array_recebido[4];
+                vazoes = array_recebido[5];
                 //System.out.println("Novo");
                 //for (int i=0;i<array_recebido.length;i++)
                 //	System.out.println(array_recebido[i]);
